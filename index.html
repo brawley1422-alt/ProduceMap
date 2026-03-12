@@ -19,6 +19,13 @@
     const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     const currentMonth = new Date().getMonth();
 
+    const URGENCY_CONFIG = {
+      critical: { label: "CRITICAL", color: "#ff4040", bg: "#2a0808", desc: "Hours matter. Missed pickup = scrapped load." },
+      high:     { label: "HIGH",     color: "#ff8c00", bg: "#251400", desc: "3–7 days. Claims common with inexperienced carriers." },
+      medium:   { label: "MODERATE", color: "#d4a020", bg: "#1e1400", desc: "1–2 week window. Standard reefer care required." },
+      flexible: { label: "FLEXIBLE", color: "#3a9e6a", bg: "#081a10", desc: "Cold storage or long shelf life. Schedule flexibility." },
+    };
+
     const ORIGIN_COORDS = {
       "Salinas, CA": [-121.66, 36.68], "Watsonville, CA": [-121.76, 36.91],
       "Oxnard, CA": [-119.18, 34.20], "Santa Maria, CA": [-120.44, 34.95],
@@ -89,9 +96,10 @@
       "Omaha, NE": [-95.94, 41.26],
     };
 
-    // shippers: actual grower-shippers and packing houses — not brands or distributors
     const PRODUCE = [
       { name: "Strawberries", emoji: "🍓", category: "Berries", peakMonths: [1,2,3,4,5,6],
+        urgency: "critical",
+        carrierReqs: ["Pre-cool to 32°F before loading — non-negotiable", "3–5 day max transit", "Air ride preferred", "No prior chemical or fuel loads"],
         origins: ["Watsonville, CA","Plant City, FL","Oxnard, CA","Brawley, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Atlanta, GA","Philadelphia, PA","Los Angeles, CA"],
         temp: "32–34°F", equipment: "FTL Reefer",
@@ -103,31 +111,37 @@
           { name: "Wish Farms", location: "Plant City, FL", note: "Established FL berry grower-shipper; peak Dec–Mar out of Plant City and Brawley" },
         ]},
       { name: "Blueberries", emoji: "🫐", category: "Berries", peakMonths: [3,4,5,6,7,8],
+        urgency: "high",
+        carrierReqs: ["Air ride suspension required — fragile fruit, bruises easily", "Pre-cool to 32°F", "No rough unloading — specify to carrier", "No prior chemical loads"],
         origins: ["Hammonton, NJ","Alma, GA","Stockbridge, MI","Whatcom County, WA","Elizabethtown, NC"],
         destinations: ["New York, NY","Chicago, IL","Boston, MA","Philadelphia, PA","Detroit, MI","Atlanta, GA"],
         temp: "32–34°F", equipment: "FTL Reefer",
-        notes: "Southeast starts April; NJ/NC peak June; Michigan July–Aug; PNW Aug–Sep. Fragile — carriers need air ride suspension.",
+        notes: "Southeast starts April; NJ/NC peak June; Michigan July–Aug; PNW Aug–Sep. Fragile — air ride suspension required, damage claims are common with inexperienced carriers.",
         shippers: [
           { name: "Atlantic Blueberry Company", location: "Hammonton, NJ", note: "One of the largest blueberry farms in the world; peak June–July, strong NY/Boston FTL lanes" },
           { name: "Lewis Taylor Farms", location: "Alma, GA", note: "Large GA grower-shipper; April–May window, good eastbound reloads out of south GA" },
           { name: "Country Fresh Farms", location: "Stockbridge, MI", note: "MI blueberry operation; July–Aug FTL volume, strong Detroit and Chicago lanes" },
           { name: "Sakuma Brothers Farms", location: "Burlington, WA", note: "Established PNW berry farm; Aug–Sep blueberry FTL out of Whatcom County" },
         ]},
-      { name: "Cranberries", emoji: "🍒", category: "Berries", peakMonths: [8,9,10,11],
+      { name: "Cranberries", emoji: "🔴", category: "Berries", peakMonths: [8,9,10,11],
+        urgency: "flexible",
+        carrierReqs: ["Dry van acceptable for processed and frozen loads", "Reefer required for fresh market cranberries", "Book lanes 6–8 weeks before Thanksgiving — capacity evaporates"],
         origins: ["Eau Claire, WI","Door County, WI","Kewaunee, WI"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Philadelphia, PA","Detroit, MI","Minneapolis, MN"],
         temp: "36–40°F", equipment: "FTL Reefer / FTL Dry Van",
-        notes: "Wisconsin produces 60%+ of US cranberries. Thanksgiving surge spikes dry van capacity — book lanes 6–8 weeks early.",
+        notes: "Wisconsin produces 60%+ of US cranberries. Thanksgiving surge spikes dry van capacity — book lanes 6–8 weeks early. Compressed 3-week harvest window in October.",
         shippers: [
           { name: "Northland Cranberries", location: "Wisconsin Rapids, WI", note: "One of the largest cranberry growers in the US; peak Sep–Oct harvest, FTL dry van and reefer" },
           { name: "Wetherby Cranberry Company", location: "Warrens, WI", note: "Long-running WI grower; consistent spot loads during Oct harvest window" },
-          { name: "Fresh Meadow Produce (WI Cranberry Co-op shippers)", location: "Tomah, WI", note: "Ask any Monroe County WI cranberry grower — the region ships in a compressed 3-week window" },
+          { name: "Fresh Meadow Produce", location: "Tomah, WI", note: "Monroe County WI cranberry region ships in a compressed 3-week window — plan accordingly" },
         ]},
       { name: "Cherries", emoji: "🍒", category: "Stone Fruit", peakMonths: [4,5,6,7],
+        urgency: "critical",
+        carrierReqs: ["Pre-cool to 30–32°F before loading — strict", "Air ride suspension required", "4-day max transit", "No prior odor-producing loads (onions, garlic, fuel)"],
         origins: ["Yakima, WA","Traverse City, MI","Linden, CA","Hood River, OR"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Miami, FL","Boston, MA","Dallas, TX"],
         temp: "30–32°F", equipment: "FTL Reefer",
-        notes: "Extremely compressed 6–8 week window. High $/lb — shippers pay premium rates but carrier standards are strict.",
+        notes: "Extremely compressed 6–8 week window. High $/lb — shippers pay premium rates but carrier standards are strict. Air ride required. Inexperienced carriers cause significant claim exposure.",
         shippers: [
           { name: "Stemilt Growers", location: "Wenatchee, WA", note: "Family-owned grower-packer; one of the largest cherry operations in the US, peak Jun–Jul" },
           { name: "Rainier Fruit Company", location: "Selah, WA", note: "Yakima Valley grower-shipper; premium sweet cherries, books lanes early — reach out by April" },
@@ -135,10 +149,12 @@
           { name: "Leelanau Fruit Company", location: "Suttons Bay, MI", note: "Northern MI tart cherry grower; July window, good Midwest lane opportunity" },
         ]},
       { name: "Grapes", emoji: "🍇", category: "Berries", peakMonths: [5,6,7,8,9,10,11],
+        urgency: "medium",
+        carrierReqs: ["SO2 pads in packaging — inform carrier before loading", "Pre-cool to 30–32°F", "Air ride preferred", "No prior chemical or fuel loads"],
         origins: ["Coachella Valley, CA","San Joaquin Valley, CA","Lodi, CA"],
         destinations: ["New York, NY","Chicago, IL","Miami, FL","Philadelphia, PA","Dallas, TX","Atlanta, GA"],
         temp: "30–32°F", equipment: "FTL Reefer",
-        notes: "CA produces 90%+ of US table grapes. Coachella starts May; San Joaquin peaks Jul–Oct. SO2 pads in packaging — ensure carrier is aware.",
+        notes: "CA produces 90%+ of US table grapes. Coachella starts May; San Joaquin peaks Jul–Oct. SO2 pads in packaging — ensure carrier is aware of the sulfur dioxide before tender.",
         shippers: [
           { name: "Pandol Bros.", location: "Delano, CA", note: "Fourth-generation family grower-packer in Delano; major FTL volume Jul–Oct to East Coast and Midwest" },
           { name: "Sunview Vineyards", location: "Delano, CA", note: "Grower-shipper in the heart of San Joaquin table grape country; consistent FTL demand summer through fall" },
@@ -146,10 +162,12 @@
           { name: "Anthony Vineyards", location: "Bakersfield, CA", note: "Large Coachella and San Joaquin grower; early season (May–Jun) Coachella volume" },
         ]},
       { name: "Watermelon", emoji: "🍉", category: "Melons", peakMonths: [4,5,6,7,8],
+        urgency: "medium",
+        carrierReqs: ["Do NOT refrigerate below 50°F — chill damage", "Weight-out loads common (40,000–44,000 lbs) — verify bridge weights", "Flatbed acceptable for field-run; reefer required for retail-pack"],
         origins: ["Cordele, GA","Hermiston, OR","Lubbock, TX","Blythe, CA","Uvalde, TX"],
         destinations: ["Chicago, IL","New York, NY","Atlanta, GA","Memphis, TN","Kansas City, MO","Dallas, TX","Houston, TX"],
         temp: "50–60°F", equipment: "FTL Dry Van / Flatbed",
-        notes: "40,000–44,000 lbs per load. GA ships May–Jun, TX follows, OR takes over Jul–Aug.",
+        notes: "40,000–44,000 lbs per load. GA ships May–Jun, TX follows, OR takes over Jul–Aug. Verify bridge weight permits on routes — these are heavy loads.",
         shippers: [
           { name: "Dekker Farms", location: "Cordele, GA", note: "Large GA watermelon grower-shipper; peak May–Jun, strong GA→Chicago and Atlanta lanes" },
           { name: "Dulcich Farms (Sun Gro)", location: "Lost Hills, CA", note: "Major CA/AZ melon grower; consistent flatbed volume through summer" },
@@ -157,62 +175,74 @@
           { name: "Dulce Nombre Farms", location: "Edinburg, TX", note: "South TX grower; Jun–Jul window, good TX→Midwest volume" },
         ]},
       { name: "Cantaloupe", emoji: "🍈", category: "Melons", peakMonths: [4,5,6,7,8],
+        urgency: "medium",
+        carrierReqs: ["Pre-cool to 36–41°F", "No prior fuel or chemical loads", "Coordinate on ripeness stage with shipper — affects transit flexibility"],
         origins: ["Yuma, AZ","Imperial Valley, CA","Rocky Ford, CO","Pecos, TX","Edinburg, TX"],
         destinations: ["Chicago, IL","Dallas, TX","Houston, TX","Los Angeles, CA","Denver, CO","Kansas City, MO"],
         temp: "36–41°F", equipment: "FTL Reefer",
-        notes: "AZ/CA→Midwest is the primary corridor. Rocky Ford CO commands a premium for specialty buyers.",
+        notes: "AZ/CA→Midwest is the primary corridor. Rocky Ford CO commands a premium for specialty buyers. Ripeness stage dictates transit urgency — coordinate with shipper before booking.",
         shippers: [
           { name: "Hess Brothers Fruit", location: "Fresno, CA", note: "Long-established CA grower-shipper; melon FTL volume May–Aug out of Yuma and Imperial Valley" },
-          { name: "Hothouse Farms", location: "Yuma, AZ", note: "AZ grower-shipper; early season cantaloupe Apr–May, strong westbound lanes" },
+          { name: "Hothouse Farms", location: "Yuma, AZ", note: "AZ grower-shipper; early season cantaloupe Apr–May, strong eastbound lanes to Chicago and Dallas" },
           { name: "Shaw Family Farms", location: "Rocky Ford, CO", note: "Heritage Rocky Ford melon operation; Aug premium cantaloupe, CO→Denver and Midwest" },
           { name: "Mesquite Creek Produce", location: "Pecos, TX", note: "TX melon grower; June–July window bridging AZ and CO seasons" },
         ]},
       { name: "Honeydew", emoji: "🍈", category: "Melons", peakMonths: [5,6,7,8,9],
+        urgency: "medium",
+        carrierReqs: ["Never below 45°F", "Compatible temps with cantaloupe — common co-load", "3–4 week shelf life gives more transit flexibility than most melons"],
         origins: ["Imperial Valley, CA","El Centro, CA","Edinburg, TX"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Dallas, TX","Atlanta, GA"],
         temp: "45–50°F", equipment: "FTL Reefer",
-        notes: "Often ships on the same trucks as cantaloupe. Longer shelf life (3–4 weeks) reduces transit urgency.",
+        notes: "Often ships on the same trucks as cantaloupe. Longer shelf life (3–4 weeks) reduces transit urgency compared to most produce. Good candidate for consolidated loads.",
         shippers: [
           { name: "Hess Brothers Fruit", location: "Fresno, CA", note: "Ships honeydew alongside cantaloupe — compatible temps, same trucks, same season" },
           { name: "Albert Bros. Farms", location: "El Centro, CA", note: "Imperial Valley grower; summer honeydew FTL volume, good CA→Midwest lanes" },
           { name: "Rio Sweet Inc.", location: "Edinburg, TX", note: "South TX shipper; honeydew alongside cantaloupes in June–July window" },
         ]},
       { name: "Oranges", emoji: "🍊", category: "Citrus", peakMonths: [0,1,2,3,4,10,11],
+        urgency: "flexible",
+        carrierReqs: ["Pre-cool to 38–48°F", "Food-grade trailer required", "Strong ethylene producers — do not co-load with ethylene-sensitive produce"],
         origins: ["Polk County, FL","Tulare County, CA","Indian River, FL","Rio Grande Valley, TX"],
         destinations: ["Chicago, IL","New York, NY","Philadelphia, PA","Boston, MA","Atlanta, GA","Detroit, MI"],
         temp: "38–48°F", equipment: "FTL Reefer",
-        notes: "High-volume, reliable reefer lanes Oct–May. FL dominates out of Polk/Indian River. CA navel season Dec–May adds strong westbound-to-east opportunity.",
+        notes: "High-volume, reliable reefer lanes Oct–May. FL dominates out of Polk/Indian River. CA navel season Dec–May adds strong westbound-to-east opportunity. One of the most dependable commodity lanes.",
         shippers: [
           { name: "Ben Hill Griffin Inc.", location: "Frostproof, FL", note: "One of the largest citrus grower-packinghouses in FL; massive Polk County volume Oct–May" },
           { name: "Evans Properties (Citrus)", location: "Lake Wales, FL", note: "Major FL citrus grower and packing operation; consistent FTL to Northeast and Midwest" },
           { name: "Wonderful Orchards", location: "Delano, CA", note: "Large Tulare County navel orange grower-shipper; Dec–May lanes to East Coast" },
           { name: "Magic Valley Growers", location: "Mission, TX", note: "Rio Grande Valley citrus grower; Jan–Mar Texas orange volume heading north" },
         ]},
-      { name: "Grapefruit", emoji: "🍋", category: "Citrus", peakMonths: [0,1,2,3,10,11],
+      { name: "Grapefruit", emoji: "🟡", category: "Citrus", peakMonths: [0,1,2,3,10,11],
+        urgency: "flexible",
+        carrierReqs: ["Never below 50°F — chilling injury is cumulative and invisible", "Pre-cool before loading", "Food-grade trailer required"],
         origins: ["Indian River, FL","Rio Grande Valley, TX","Coachella Valley, CA"],
         destinations: ["New York, NY","Chicago, IL","Philadelphia, PA","Boston, MA","Detroit, MI","Miami, FL"],
         temp: "50–60°F", equipment: "FTL Reefer",
-        notes: "FL Indian River is the premium source — consistent broker lanes Nov–Apr. TX Rio Grande Valley peaks Jan–Mar.",
+        notes: "FL Indian River is the premium source — consistent broker lanes Nov–Apr. TX Rio Grande Valley peaks Jan–Mar. Never go below 50°F — chilling injury is a real exposure even at slightly low temps.",
         shippers: [
-          { name: "Vero Beach Growers / Indian River Exchange Packers", location: "Vero Beach, FL", note: "Cooperative packing operation in the heart of Indian River; consistent FTL lanes to NY and Boston Nov–Apr" },
+          { name: "Vero Beach Growers / Indian River Exchange Packers", location: "Vero Beach, FL", note: "Cooperative packing in the heart of Indian River; consistent FTL lanes to NY and Boston Nov–Apr" },
           { name: "Ben Hill Griffin Inc.", location: "Frostproof, FL", note: "FL citrus grower-packer; ships grapefruit alongside oranges — multi-commodity account" },
           { name: "Texas Citrus Exchange", location: "Mission, TX", note: "Grower cooperative in the Rio Grande Valley; Jan–Mar grapefruit FTL volume north" },
         ]},
       { name: "Lemons", emoji: "🍋", category: "Citrus", peakMonths: [0,1,2,3,4,5,6,7,8,9,10,11],
+        urgency: "flexible",
+        carrierReqs: ["Pre-cool to 50–55°F", "Year-round demand — build dedicated carrier relationships for this lane", "Food-grade trailer required"],
         origins: ["Ventura County, CA","Tulare County, CA","Yuma, AZ"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Boston, MA","Atlanta, GA"],
         temp: "50–55°F", equipment: "FTL Reefer",
-        notes: "True year-round commodity — one of the most consistent reefer lanes out of CA. Ventura County leads.",
+        notes: "True year-round commodity — one of the most consistent reefer lanes out of CA. Ventura County leads. Ideal anchor lane to build a carrier relationship around.",
         shippers: [
           { name: "Limoneira Company", location: "Santa Paula, CA", note: "Publicly traded Ventura County grower-packer; year-round lemon FTL volume, strong East Coast distribution" },
           { name: "Wonderful Orchards", location: "Delano, CA", note: "Tulare County lemon operation; consistent year-round FTL demand out of CA" },
           { name: "Murr-Cal Farms", location: "Ventura County, CA", note: "Mid-size Ventura County lemon grower-shipper; good relationship to develop for steady volume" },
         ]},
       { name: "Limes", emoji: "🍈", category: "Citrus", peakMonths: [0,1,2,3,4,5,6,7,8,9,10,11],
+        urgency: "flexible",
+        carrierReqs: ["Never below 48°F — extremely chilling-sensitive", "Rates spike 3–4x in shortage: always have backup carriers ready", "Food-grade trailer required"],
         origins: ["Nogales, AZ","Laredo, TX"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Houston, TX","Miami, FL","Los Angeles, CA"],
         temp: "48–55°F", equipment: "FTL Reefer",
-        notes: "90%+ Mexican imports. Year-round with summer peak. Rates can spike 3–4x in shortage.",
+        notes: "90%+ Mexican imports. Year-round with summer peak. Rates can spike 3–4x in shortage. Never let carriers drop below 48°F — chilling injury shows up at retail, not at delivery.",
         shippers: [
           { name: "Ciruli Bros.", location: "Nogales, AZ", note: "Multi-generation produce importer at Nogales; lime FTL year-round, ask about their consolidation schedule" },
           { name: "Suntreat Packing", location: "Nogales, AZ", note: "Nogales packing operation; handles Mexican lime volume at the border, consistent shipper" },
@@ -220,20 +250,24 @@
           { name: "Border Fresh Produce", location: "Laredo, TX", note: "Laredo crossing importer; call for current lime volume and schedule" },
         ]},
       { name: "Tangerines / Mandarins", emoji: "🍊", category: "Citrus", peakMonths: [10,11,0,1,2],
+        urgency: "flexible",
+        carrierReqs: ["Pre-cool to 38–48°F", "Book capacity by October for holiday surge — do not wait", "Food-grade trailer required"],
         origins: ["Tulare County, CA","Polk County, FL","Brawley, CA"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Philadelphia, PA","Dallas, TX","Atlanta, GA"],
         temp: "38–48°F", equipment: "FTL Reefer",
-        notes: "Holiday season surge makes Nov–Dec a high-demand window. Clementine gift boxes drive enormous retail volume. Book capacity by October.",
+        notes: "Holiday season surge makes Nov–Dec a high-demand window. Clementine gift boxes drive enormous retail volume. Book capacity by October — this lane tightens fast.",
         shippers: [
           { name: "Wonderful Orchards", location: "Delano, CA", note: "Massive Tulare County mandarin grower; Nov–Feb reefer volume to all major markets — one of the largest in the US" },
           { name: "Sun Pacific Farming", location: "Exeter, CA", note: "Grower-packer in the San Joaquin; Satsuma specialist, peak Nov–Jan, strong retail distribution" },
           { name: "Western Citrus Packers", location: "Visalia, CA", note: "Tulare County packing house; handles mandarin volume for multiple growers Nov–Feb" },
         ]},
       { name: "Apples", emoji: "🍎", category: "Tree Fruit", peakMonths: [7,8,9,10,11,0,1,2],
+        urgency: "flexible",
+        carrierReqs: ["Ships from cold storage — good schedule flexibility", "Pre-cool to 30–32°F", "Strong ethylene producers — never co-load with ethylene-sensitive produce (broccoli, lettuce, carrots)"],
         origins: ["Wenatchee, WA","Yakima, WA","Martinsburg, WV","Grand Rapids, MI","Winchester, VA"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Dallas, TX","Miami, FL","Philadelphia, PA","Boston, MA"],
         temp: "30–32°F", equipment: "FTL Reefer",
-        notes: "One of the most dependable year-round reefer lanes. WA ships 60%+ of US supply from cold storage Aug–May.",
+        notes: "One of the most dependable year-round reefer lanes. WA ships 60%+ of US supply from cold storage Aug–May. Anchor commodity for building consistent carrier relationships.",
         shippers: [
           { name: "Stemilt Growers", location: "Wenatchee, WA", note: "Family-owned WA grower-packer; one of the top apple shippers in the US, year-round FTL lanes" },
           { name: "Rainier Fruit Company", location: "Selah, WA", note: "Yakima Valley grower-shipper; premium varieties, high FTL volume Aug–Apr" },
@@ -241,10 +275,12 @@
           { name: "Rice Fruit Company", location: "Gardners, PA", note: "PA grower-packer; Martinsburg-area fruit, East Coast lanes Aug–Nov" },
         ]},
       { name: "Pears", emoji: "🍐", category: "Tree Fruit", peakMonths: [6,7,8,9,10,11],
+        urgency: "flexible",
+        carrierReqs: ["Coldest required temp in tree fruit — verify carrier controls before tender", "Ships from cold storage — schedule flexibility Aug–Mar", "Verify refrigeration unit calibration — 1–2°F variance matters at 29°F"],
         origins: ["Medford, OR","Yakima, WA","Hood River, OR"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Seattle, WA","Denver, CO","Dallas, TX"],
         temp: "29–31°F", equipment: "FTL Reefer",
-        notes: "Oregon Medford/Hood River is the undisputed hub. Ships Aug–Mar from cold storage. Coldest temp in tree fruit — verify carrier controls.",
+        notes: "Oregon Medford/Hood River is the undisputed hub. Ships Aug–Mar from cold storage. Coldest required temp in tree fruit — verify carrier can hold 29–31°F consistently before tender.",
         shippers: [
           { name: "Diamond Fruit Growers", location: "Hood River, OR", note: "Grower cooperative in Hood River; strong FTL lanes to Chicago and East, Aug–Feb" },
           { name: "Duckwall-Pooley Fruit Co.", location: "Hood River, OR", note: "Long-established Hood River grower-packer; reliable spot and contract lane opportunities" },
@@ -252,10 +288,12 @@
           { name: "Harry & David Orchards", location: "Medford, OR", note: "Medford grower-packer; significant holiday pear volume Oct–Dec, worth calling for fall lanes" },
         ]},
       { name: "Peaches", emoji: "🍑", category: "Stone Fruit", peakMonths: [4,5,6,7,8],
+        urgency: "high",
+        carrierReqs: ["Air ride suspension required — highly fragile, bruises instantly", "Pre-cool to 31–32°F", "5-day max transit", "No prior chemical or fuel loads"],
         origins: ["Fresno, CA","Spartanburg, SC","Fort Valley, GA","Grand Junction, CO","Chilton County, AL"],
         destinations: ["New York, NY","Chicago, IL","Philadelphia, PA","Boston, MA","Detroit, MI","Atlanta, GA"],
         temp: "31–32°F", equipment: "FTL Reefer",
-        notes: "Compressed May–Sep season. GA/SC leads East early; CA extends through Sep. Fragile — transit claims common with inexperienced carriers.",
+        notes: "Compressed May–Sep season. GA/SC leads East early; CA extends through Sep. Highly fragile — transit claims are common with inexperienced carriers. Air ride is non-negotiable.",
         shippers: [
           { name: "Wawona Packing Co.", location: "Cutler, CA", note: "Largest CA peach packing shed; massive FTL reefer volume Jun–Sep, strong East Coast and Midwest lanes" },
           { name: "Titan Farms", location: "Ridge Spring, SC", note: "One of the largest peach farms in the eastern US; peak May–Jul, grower-shipper with consistent FTL demand" },
@@ -263,30 +301,36 @@
           { name: "Keenan Farms", location: "Fresno, CA", note: "CA stone fruit grower-packer; peaches alongside nectarines, good Jun–Aug relationship" },
         ]},
       { name: "Nectarines", emoji: "🍑", category: "Stone Fruit", peakMonths: [4,5,6,7,8],
+        urgency: "high",
+        carrierReqs: ["Air ride suspension required", "Pre-cool to 31–32°F", "Same carrier standards as peaches — do not cut corners"],
         origins: ["Fresno, CA","Reedley, CA","Dinuba, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Boston, MA","Los Angeles, CA"],
         temp: "31–32°F", equipment: "FTL Reefer",
-        notes: "Virtually all domestic nectarines from CA San Joaquin Valley. Runs parallel to peach season — same shippers, same lanes.",
+        notes: "Virtually all domestic nectarines from CA San Joaquin Valley. Runs parallel to peach season — same shippers, same lanes, same carrier requirements.",
         shippers: [
           { name: "Wawona Packing Co.", location: "Cutler, CA", note: "Ships nectarines alongside peaches — cover both commodities with one relationship" },
           { name: "Gerawan Farming", location: "Fresno, CA", note: "Large family farm in Fresno County; stone fruit grower-packer with strong FTL volume Jun–Aug" },
           { name: "Kingsburg Orchards", location: "Kingsburg, CA", note: "Premium nectarine and stone fruit operation; strong retail distribution lanes Jun–Aug" },
         ]},
       { name: "Plums", emoji: "🟣", category: "Stone Fruit", peakMonths: [5,6,7,8,9],
+        urgency: "medium",
+        carrierReqs: ["Pre-cool to 31–32°F", "Air ride preferred", "No prior chemical or fuel loads"],
         origins: ["Fresno, CA","San Joaquin Valley, CA","Selma, CA"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Philadelphia, PA","Dallas, TX"],
         temp: "31–32°F", equipment: "FTL Reefer",
-        notes: "CA San Joaquin dominates. Runs alongside peach/nectarine season — good for building full shipper relationships out of Fresno/Selma.",
+        notes: "CA San Joaquin dominates. Runs alongside peach/nectarine season — good for building full shipper relationships out of Fresno/Selma. Slightly more transit flexibility than peaches.",
         shippers: [
           { name: "Gerawan Farming", location: "Fresno, CA", note: "Grows plums alongside peaches and nectarines — great single-relationship for full stone fruit coverage" },
           { name: "Kingsburg Orchards", location: "Kingsburg, CA", note: "Pluot and plum specialist; premium varieties, retail-focused distribution lanes" },
           { name: "Crain Brothers Farms", location: "Selma, CA", note: "Selma-area stone fruit grower-shipper; consistent mid-season volume Jun–Sep" },
         ]},
       { name: "Avocados", emoji: "🥑", category: "Tree Fruit", peakMonths: [0,1,2,3,4,5,6,7,8,9,10,11],
+        urgency: "medium",
+        carrierReqs: ["Never below 45°F — chilling damage is irreversible and invisible at delivery", "Coordinate ripeness stage with shipper before tender — affects transit window", "No prior chemical or fuel loads"],
         origins: ["Nogales, AZ","Laredo, TX","San Diego County, CA","Ventura County, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Houston, TX","Los Angeles, CA","Miami, FL","Atlanta, GA"],
         temp: "45–55°F", equipment: "FTL Reefer",
-        notes: "One of the fastest-growing reefer lanes in produce. 90%+ Mexican imports via Nogales and Laredo.",
+        notes: "One of the fastest-growing reefer lanes in produce. 90%+ Mexican imports via Nogales and Laredo. Ripeness stage at loading determines transit urgency — always coordinate with the shipper.",
         shippers: [
           { name: "Ciruli Bros.", location: "Nogales, AZ", note: "Major importer-packer at Nogales; avocados are a core commodity — high FTL volume year-round" },
           { name: "Growers & Shippers of Nogales", location: "Nogales, AZ", note: "Multiple packing operations clustered at the port — cold call the industrial park on Grand Ave for avocado shippers" },
@@ -294,10 +338,12 @@
           { name: "Camposol USA", location: "Laredo, TX", note: "Peruvian grower operating US import distribution; significant Laredo FTL volume" },
         ]},
       { name: "Mangoes", emoji: "🥭", category: "Tropical", peakMonths: [3,4,5,6,7,8],
+        urgency: "medium",
+        carrierReqs: ["Never below 50°F — extremely chilling-sensitive", "Coordinate ripeness stage with shipper — affects transit window significantly"],
         origins: ["Nogales, AZ","Laredo, TX","Rio Grande Valley, TX"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Dallas, TX","Houston, TX","Miami, FL"],
         temp: "50–55°F", equipment: "FTL Reefer",
-        notes: "100% imported — Nogales and Laredo are the only domestic broker pickup points. Extremely chilling-sensitive below 50°F.",
+        notes: "100% imported — Nogales and Laredo are the only domestic broker pickup points. Extremely chilling-sensitive below 50°F. Ripeness at loading determines how fast this load moves.",
         shippers: [
           { name: "Ciruli Bros.", location: "Nogales, AZ", note: "Key mango importer at Nogales; ask for their Apr–Sep schedule when reaching out" },
           { name: "MV International (Meza Family)", location: "Nogales, AZ", note: "Established Nogales importer; tropical fruit including mangoes, Apr–Aug volume" },
@@ -305,10 +351,12 @@
           { name: "Frontera Produce", location: "Edinburg, TX", note: "Laredo-area importer; tropical and vegetable mix — good multi-commodity account" },
         ]},
       { name: "Lettuce", emoji: "🥬", category: "Leafy Greens", peakMonths: [0,1,2,3,4,8,9,10,11],
+        urgency: "high",
+        carrierReqs: ["Pre-cool to 32°F — not optional", "5-day max transit on Romaine and green leaf", "No prior chemical loads", "The Salinas→Yuma transition (Oct & Apr) disrupts capacity — book early"],
         origins: ["Salinas, CA","Yuma, AZ","Santa Maria, CA","Imperial Valley, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Atlanta, GA","Miami, FL","Philadelphia, PA","Houston, TX"],
         temp: "32–36°F", equipment: "FTL Reefer",
-        notes: "Highest-volume leafy green in the US. The Salinas→Yuma handoff (Oct and Apr) creates capacity disruptions — position accordingly.",
+        notes: "Highest-volume leafy green in the US. The Salinas→Yuma handoff (Oct and Apr) creates capacity disruptions — position accordingly. Pre-cooling is non-negotiable.",
         shippers: [
           { name: "Tanimura & Antle", location: "Salinas, CA", note: "Family-owned grower-shipper; one of the biggest lettuce operations in the country, FTL lanes to all major markets" },
           { name: "Church Brothers Farms", location: "Salinas, CA", note: "Large Salinas family farm; leafy green FTL year-round from both Salinas and Yuma" },
@@ -316,71 +364,85 @@
           { name: "Braga Fresh Family Farms", location: "Brawley, CA", note: "Imperial Valley grower; winter season FTL volume when Salinas transitions to Yuma" },
         ]},
       { name: "Spinach", emoji: "🥬", category: "Leafy Greens", peakMonths: [0,1,2,3,4,8,9,10,11],
+        urgency: "high",
+        carrierReqs: ["Pre-cool to 32°F — strict", "5-day max transit for bagged spinach", "High-value load — verify carrier insurance minimums"],
         origins: ["Salinas, CA","Yuma, AZ","Santa Maria, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Boston, MA","Atlanta, GA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "Bagged spinach is one of the highest-value leafy green loads. 7–10 day shelf life means urgency is real.",
+        notes: "Bagged spinach is one of the highest-value leafy green loads. 7–10 day shelf life means urgency is real. At proper temp it holds well — the risk is carriers who don't maintain 32°F consistently.",
         shippers: [
           { name: "Church Brothers Farms", location: "Salinas, CA", note: "Major Salinas spinach grower-shipper; high-value FTL volume year-round from CA and AZ" },
           { name: "Lakeside Organic Gardens", location: "Watsonville, CA", note: "Organic spinach grower; premium loads, consistent FTL lanes to East Coast and Midwest" },
           { name: "Ippolito International", location: "Salinas, CA", note: "Salinas grower-packer; spinach and mixed leafy greens, consistent FTL demand" },
         ]},
       { name: "Kale", emoji: "🥬", category: "Leafy Greens", peakMonths: [0,1,2,3,4,5,8,9,10,11],
+        urgency: "medium",
+        carrierReqs: ["Pre-cool to 32–36°F", "2–3 week shelf life gives more transit flexibility than spinach or lettuce"],
         origins: ["Salinas, CA","Yuma, AZ","Santa Maria, CA"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Philadelphia, PA","Dallas, TX","Atlanta, GA"],
         temp: "32–36°F", equipment: "FTL Reefer",
-        notes: "Demand has exploded over the past decade. Heartier than other leafy greens — 2–3 week shelf life reduces urgency slightly.",
+        notes: "Demand has exploded over the past decade. Heartier than other leafy greens — 2–3 week shelf life reduces transit urgency. Good fill load alongside broccoli or spinach.",
         shippers: [
           { name: "Church Brothers Farms", location: "Salinas, CA", note: "Ships kale alongside spinach and other leafy greens — strong year-round FTL relationship" },
           { name: "Lakeside Organic Gardens", location: "Watsonville, CA", note: "Organic kale grower; premium value loads with consistent FTL demand" },
           { name: "Braga Fresh Family Farms", location: "Brawley, CA", note: "Imperial Valley grower shipping kale during the winter AZ/CA season" },
         ]},
       { name: "Broccoli", emoji: "🥦", category: "Brassicas", peakMonths: [0,1,2,3,4,8,9,10,11],
+        urgency: "high",
+        carrierReqs: ["Pre-cool to 32°F — top-ice critical in addition to reefer", "4-day max transit — high respiration commodity", "Verify unit is actively maintaining temp, not just set-point"],
         origins: ["Salinas, CA","Yuma, AZ","Santa Maria, CA","Imperial Valley, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Boston, MA","Atlanta, GA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "High respiration — pre-cooling and top-ice critical. One of the most consistent FTL reefer commodities year-round.",
+        notes: "High respiration — pre-cooling and top-ice critical. One of the most consistent FTL reefer commodities year-round. Carriers must actively maintain 32°F — just setting the unit is not enough.",
         shippers: [
           { name: "Church Brothers Farms", location: "Salinas, CA", note: "Major broccoli grower-shipper; year-round FTL volume from Salinas and Yuma" },
           { name: "Ippolito International", location: "Salinas, CA", note: "Salinas grower-packer with consistent broccoli FTL demand; multi-commodity account" },
           { name: "D'Arrigo Bros.", location: "Salinas, CA", note: "Third-generation operation; broccoli alongside lettuce and other brassicas — good package account" },
-          { name: "Santa Maria Broccoli (Betteravia Farms)", location: "Santa Maria, CA", note: "Large Santa Maria Valley grower; ships broccoli and cauliflower, consistent coastal CA volume" },
+          { name: "Betteravia Farms", location: "Santa Maria, CA", note: "Large Santa Maria Valley grower; ships broccoli and cauliflower, consistent coastal CA volume" },
         ]},
       { name: "Cauliflower", emoji: "🥦", category: "Brassicas", peakMonths: [0,1,2,3,4,9,10,11],
+        urgency: "medium",
+        carrierReqs: ["Pre-cool to 32°F", "No prior chemical loads"],
         origins: ["Salinas, CA","Santa Maria, CA","Lompoc, CA","Yuma, AZ"],
         destinations: ["Chicago, IL","New York, NY","Philadelphia, PA","Boston, MA","Dallas, TX","Los Angeles, CA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "Demand surge from low-carb diets has significantly increased FTL volumes over the past 5 years.",
+        notes: "Demand surge from low-carb diets has significantly increased FTL volumes over the past 5 years. Good candidate for combined loads with broccoli out of the same shippers.",
         shippers: [
           { name: "Church Brothers Farms", location: "Salinas, CA", note: "Ships cauliflower and broccoli together — great full-truck mix from Santa Cruz coast" },
           { name: "Betteravia Farms", location: "Santa Maria, CA", note: "Coastal CA grower-packer; cauliflower and broccoli FTL out of Santa Maria and Lompoc" },
           { name: "Lakeside Organic Gardens", location: "Watsonville, CA", note: "Organic cauliflower; premium value loads, consistent FTL demand" },
         ]},
       { name: "Cabbage", emoji: "🥬", category: "Brassicas", peakMonths: [0,1,2,3,4,5,9,10,11],
+        urgency: "medium",
+        carrierReqs: ["Pre-cool to 32°F", "High-cube load — verify trailer cube vs weight ratio before booking"],
         origins: ["Salinas, CA","Yuma, AZ","Hastings, FL","Rocky Mount, NC"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Atlanta, GA","Miami, FL"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "High-cube, lower $/lb — efficient to fill a truck. St. Patrick's Day demand spike in March is real and predictable.",
+        notes: "High-cube, lower $/lb — efficient to fill a truck. St. Patrick's Day demand spike in March is real and predictable. Good anchor load for lane-building.",
         shippers: [
           { name: "Duda Farm Fresh Foods", location: "Oviedo, FL (Hastings ops)", note: "FL winter cabbage grower-shipper; Jan–Apr strong lanes to NY, Chicago, Miami" },
           { name: "Tanimura & Antle", location: "Salinas, CA", note: "Ships cabbage year-round from Salinas and Yuma — good multi-commodity account" },
           { name: "Sanderson Farms Cabbage (SK Produce)", location: "Hastings, FL", note: "Hastings FL grower; Mar cabbage peak is significant — reach out by January" },
         ]},
       { name: "Brussels Sprouts", emoji: "🥦", category: "Brassicas", peakMonths: [8,9,10,11,0,1],
+        urgency: "medium",
+        carrierReqs: ["Pre-cool to 32°F", "Long CA→East lane — verify carrier HOS compliance", "Book ahead for Oct–Nov Thanksgiving surge — rates spike with demand"],
         origins: ["Santa Maria, CA","Salinas, CA","Lompoc, CA"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Philadelphia, PA","Dallas, TX","Atlanta, GA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "CA produces 90%+ of US supply. Thanksgiving creates a massive Oct–Nov volume spike. CA→East lanes are long and high-value.",
+        notes: "CA produces 90%+ of US supply. Thanksgiving creates a massive Oct–Nov volume spike. CA→East lanes are long and high-value. Reach out to shippers by September.",
         shippers: [
           { name: "Ocean Mist Farms", location: "Castroville, CA", note: "Largest US Brussels sprout and artichoke grower-shipper; peak Oct–Nov volume surge to East Coast" },
           { name: "Church Brothers Farms", location: "Salinas, CA", note: "Ships Brussels alongside broccoli and cauliflower in fall; consistent FTL volume" },
           { name: "Betteravia Farms", location: "Santa Maria, CA", note: "Coastal CA Brussels sprout grower; Thanksgiving window is high-value — reach out by September" },
         ]},
       { name: "Tomatoes", emoji: "🍅", category: "Vegetables", peakMonths: [2,3,4,5,6,7,8,9],
+        urgency: "medium",
+        carrierReqs: ["Never below 50°F — chilling damage is immediate and invisible at delivery", "Mature green: 55–70°F; vine-ripe: 50–55°F — coordinate stage with shipper", "No prior fuel or chemical loads"],
         origins: ["Immokalee, FL","Nogales, AZ","Oxnard, CA","Homestead, FL"],
         destinations: ["New York, NY","Chicago, IL","Dallas, TX","Atlanta, GA","Philadelphia, PA","Houston, TX","Miami, FL"],
-        temp: "55–70°F", equipment: "FTL Reefer",
-        notes: "Never below 50°F. Nogales→Dallas→Chicago is one of the busiest produce corridors in the US.",
+        temp: "50–70°F (stage-dependent)", equipment: "FTL Reefer",
+        notes: "Never below 50°F — chilling injury occurs immediately and shows up at retail, not at delivery. Mature green tomatoes ship at 55–70°F; vine-ripe closer to 50–55°F. Always confirm ripeness stage with shipper before setting temp. Nogales→Dallas→Chicago is one of the busiest produce corridors in the US.",
         shippers: [
           { name: "Lipman Family Farms", location: "Immokalee, FL", note: "One of the largest tomato growers in the US; year-round FTL from FL and Nogales operations" },
           { name: "Pacific Tomato Growers", location: "Palmetto, FL", note: "Grower-packer in FL; consistent FTL to NY, Chicago, Philadelphia Oct–Jun" },
@@ -388,10 +450,12 @@
           { name: "Six L's Packing Co.", location: "Immokalee, FL", note: "Immokalee packing house covering tomatoes, peppers, cucumbers — great multi-commodity account" },
         ]},
       { name: "Bell Peppers", emoji: "🫑", category: "Vegetables", peakMonths: [2,3,4,5,6,7,8,9],
+        urgency: "medium",
+        carrierReqs: ["Never below 45°F", "No prior chemical or fuel loads"],
         origins: ["Nogales, AZ","Immokalee, FL","Laredo, TX","Brawley, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Atlanta, GA","Boston, MA"],
         temp: "45–50°F", equipment: "FTL Reefer",
-        notes: "Mexico via Nogales is increasingly dominant. Red/yellow/orange bells move at 2x premium vs green. Do not go below 45°F.",
+        notes: "Mexico via Nogales is increasingly dominant. Red/yellow/orange bells move at 2x premium vs green. Do not go below 45°F — chilling injury is a real claim exposure.",
         shippers: [
           { name: "Six L's Packing Co.", location: "Immokalee, FL", note: "FL grower-packer; bell peppers alongside tomatoes and cucumbers — high-value multi-commodity account" },
           { name: "Pero Family Farms", location: "Delray Beach, FL", note: "Major FL vegetable grower; peppers, cucumbers, squash — year-round FTL volume" },
@@ -399,10 +463,12 @@
           { name: "Houweling Nurseries (Nogales)", location: "Nogales, AZ", note: "Canadian greenhouse grower with AZ import ops; ask about their weekly FTL schedule" },
         ]},
       { name: "Cucumbers", emoji: "🥒", category: "Vegetables", peakMonths: [2,3,4,5,6,7,8,9],
+        urgency: "medium",
+        carrierReqs: ["Never below 50°F — chilling injury", "Compatible temps with peppers — common co-load opportunity"],
         origins: ["Nogales, AZ","Immokalee, FL","Laredo, TX","Palmetto, FL"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Atlanta, GA","Boston, MA"],
         temp: "50–55°F", equipment: "FTL Reefer",
-        notes: "FL and Mexico are co-dominant year-round. Nogales handles the single largest volume of cucumber imports.",
+        notes: "FL and Mexico are co-dominant year-round. Nogales handles the single largest volume of cucumber imports. Good combined load candidate with peppers.",
         shippers: [
           { name: "Pero Family Farms", location: "Delray Beach, FL", note: "One of the largest FL cucumber grower-shippers; year-round FTL demand, strong Northeast lanes" },
           { name: "Six L's Packing Co.", location: "Immokalee, FL", note: "Cucumbers alongside tomatoes and peppers — great multi-commodity FL packing house" },
@@ -410,60 +476,72 @@
           { name: "West Coast Tomato (Palmetto ops)", location: "Palmetto, FL", note: "Palmetto-area packing operation; cucumber FTL volume spring and summer" },
         ]},
       { name: "Asparagus", emoji: "🌿", category: "Vegetables", peakMonths: [1,2,3,4,5],
+        urgency: "critical",
+        carrierReqs: ["Pre-cool to 32°F before loading — strict", "3-day max transit — verify before booking", "No overnight sits — direct routing required", "No prior chemical or fuel loads"],
         origins: ["Stockton, CA","Yakima, WA","Nogales, AZ","Pasco, WA"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Philadelphia, PA","Seattle, WA","Dallas, TX"],
         temp: "32–36°F", equipment: "FTL Reefer",
-        notes: "Extremely perishable — 2–3 day shelf life. Short window, high urgency, premium rates.",
+        notes: "Extremely perishable — at proper temp holds 2–3 weeks, but any temperature variance collapses that rapidly. Short window, high urgency, premium rates. Carriers cannot sit on these overnight — build direct routing into the tender.",
         shippers: [
           { name: "Sandrini Ranch", location: "Stockton, CA", note: "Established CA asparagus grower; peak Mar–May, good Stockton→Midwest FTL lanes" },
           { name: "Stadelman Fruit", location: "Yakima, WA", note: "WA asparagus alongside tree fruit; spring FTL opportunity Apr–May out of Yakima" },
           { name: "Gourmet Trading Company", location: "Los Angeles, CA", note: "Asparagus packer/shipper sourcing from CA, WA, and Nogales imports — consistent FTL demand Feb–May" },
         ]},
       { name: "Sweet Corn", emoji: "🌽", category: "Vegetables", peakMonths: [4,5,6,7,8],
+        urgency: "critical",
+        carrierReqs: ["Pre-cool to 32°F + top-ice required — both", "2-day max transit", "Sugar converts to starch rapidly — carrier cannot delay for any reason"],
         origins: ["Belle Glade, FL","Sacramento Valley, CA","Zellwood, FL","Rochelle, IL"],
         destinations: ["Chicago, IL","New York, NY","Philadelphia, PA","Boston, MA","Minneapolis, MN","Atlanta, GA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "One of the most time-sensitive commodities — sugar converts to starch rapidly above 32°F.",
+        notes: "Most time-sensitive commodity in produce — sugar converts to starch rapidly above 32°F. 2-day max transit. Pre-cool plus top-ice, no exceptions. Carrier delays are a claim waiting to happen.",
         shippers: [
           { name: "Duda Farm Fresh Foods", location: "Oviedo, FL (Zellwood ops)", note: "FL sweet corn grower-shipper; Zellwood is their hub — peak May, great Chicago/Atlanta lanes" },
           { name: "Pero Family Farms", location: "Delray Beach, FL", note: "Major FL sweet corn shipper May–Jun; strong Northeast FTL volume" },
           { name: "Bianchi Farms", location: "Belle Glade, FL", note: "Large Belle Glade grower; sweet corn FTL May–Jun, good SE→Northeast opportunity" },
         ]},
       { name: "Green Beans", emoji: "🫘", category: "Vegetables", peakMonths: [2,3,4,5,6,7,8,9],
+        urgency: "medium",
+        carrierReqs: ["Pre-cool to 40–45°F", "No prior chemical loads"],
         origins: ["Immokalee, FL","Nogales, AZ","Fresno, CA","Wauchula, FL","Laredo, TX"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Atlanta, GA","Boston, MA"],
         temp: "40–45°F", equipment: "FTL Reefer",
-        notes: "High-volume with multiple harvests per season. FL leads Dec–Apr; CA takes summer; Mexico year-round.",
+        notes: "High-volume with multiple harvests per season. FL leads Dec–Apr; CA takes summer; Mexico year-round via Nogales.",
         shippers: [
           { name: "Pero Family Farms", location: "Delray Beach, FL", note: "Multi-commodity FL grower; green beans alongside cucumbers and peppers" },
           { name: "Six L's Packing Co.", location: "Immokalee, FL", note: "Winter green bean volume Dec–Apr; consistent FTL demand out of Immokalee" },
           { name: "Ramos Farming", location: "Fresno, CA", note: "CA summer green bean operation; Jun–Sep FTL volume, good Fresno→Midwest lanes" },
         ]},
       { name: "Celery", emoji: "🥬", category: "Vegetables", peakMonths: [0,1,2,3,4,5,6,7,8,9,10,11],
+        urgency: "medium",
+        carrierReqs: ["Pre-cool to 32°F", "Year-round demand — ideal anchor lane for building dedicated carrier relationships"],
         origins: ["Oxnard, CA","Salinas, CA","Sarasota County, FL","Lake Wales, FL"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Boston, MA","Atlanta, GA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "Year-round commodity with steady, predictable FTL volume. Thanksgiving spikes demand significantly Oct–Nov.",
+        notes: "Year-round commodity with steady, predictable FTL volume. Thanksgiving spikes demand significantly Oct–Nov. Ideal anchor commodity for carrier lane-building.",
         shippers: [
           { name: "Duda Farm Fresh Foods", location: "Oviedo, FL (CA and FL ops)", note: "Dominant US celery grower-shipper — year-round FTL from FL and CA; one of the most consistent accounts available" },
           { name: "Church Brothers Farms", location: "Salinas, CA", note: "CA celery volume Apr–Nov from Salinas; reliable year-round FTL demand" },
           { name: "Alsum Farms & Produce", location: "Friesland, WI", note: "FL winter celery ops; good complementary relationship to CA summer volume" },
         ]},
       { name: "Zucchini / Summer Squash", emoji: "🫑", category: "Vegetables", peakMonths: [2,3,4,5,6,7,8,9],
+        urgency: "medium",
+        carrierReqs: ["Never below 41°F — chilling-sensitive", "High-cube load — verify weight vs cube before booking"],
         origins: ["Nogales, AZ","Immokalee, FL","Fresno, CA","Laredo, TX"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Atlanta, GA","Los Angeles, CA"],
         temp: "41–50°F", equipment: "FTL Reefer",
-        notes: "High-cube, moderate value. FL and Mexico dominate spring; CA takes summer.",
+        notes: "High-cube, moderate value. FL and Mexico dominate spring; CA takes summer. Good combined load with cucumbers or peppers.",
         shippers: [
           { name: "Pero Family Farms", location: "Delray Beach, FL", note: "Ships summer squash alongside cucumbers and peppers — great multi-commodity FL account" },
           { name: "Six L's Packing Co.", location: "Immokalee, FL", note: "FL squash volume spring; good combined load opportunity with tomatoes and peppers" },
           { name: "Southern Valley Fruit & Vegetable", location: "Norman Park, GA", note: "SE vegetable grower-shipper; squash and cucumbers, good GA→Northeast opportunity" },
         ]},
       { name: "Potatoes", emoji: "🥔", category: "Root Vegetables", peakMonths: [0,1,2,3,7,8,9,10,11],
+        urgency: "flexible",
+        carrierReqs: ["Never below 40°F in winter — chill injury", "Dry van acceptable in cool months", "Weight-out loads common — verify bridge weight limits on route before booking"],
         origins: ["Idaho Falls, ID","Yakima, WA","Greeley, CO","Red River Valley, ND","Aroostook County, ME","Twin Falls, ID","Buhl, ID"],
         destinations: ["Chicago, IL","Los Angeles, CA","New York, NY","Dallas, TX","Atlanta, GA","Denver, CO","Philadelphia, PA"],
         temp: "40–50°F", equipment: "FTL Reefer / FTL Dry Van",
-        notes: "One of the largest OTR produce lanes in the country by volume. Idaho ships 30%+ of US supply year-round from cold storage.",
+        notes: "One of the largest OTR produce lanes in the country by volume. Idaho ships 30%+ of US supply year-round from cold storage. Weight-out loads common — always verify bridge permits.",
         shippers: [
           { name: "Idahoan Foods / King Fresh Produce", location: "Shelley, ID", note: "Large fresh potato operation in eastern ID; year-round FTL volume, strong ID→Midwest and East lanes" },
           { name: "Pomerelle Produce", location: "Burley, ID", note: "Snake River Valley fresh potato shipper; reliable spot and contract lane opportunities" },
@@ -471,10 +549,12 @@
           { name: "Loring Farm (& local sheds)", location: "Presque Isle, ME", note: "Aroostook County potato operation; ME→Northeast FTL lanes Aug–Mar" },
         ]},
       { name: "Sweet Potatoes", emoji: "🍠", category: "Root Vegetables", peakMonths: [0,1,2,9,10,11],
+        urgency: "flexible",
+        carrierReqs: ["CRITICAL: never below 55°F — chilling injury is irreversible and invisible at delivery", "Do not co-load with commodities requiring below 55°F", "Dry van acceptable in warm months with temp protection"],
         origins: ["Faison, NC","Chadbourn, NC","Vardaman, MS","Tifton, GA","Goldsboro, NC"],
         destinations: ["Chicago, IL","New York, NY","Philadelphia, PA","Boston, MA","Los Angeles, CA","Atlanta, GA"],
         temp: "55–60°F", equipment: "FTL Dry Van / Temp-Controlled",
-        notes: "NC produces 60%+ of US supply. CRITICAL: never below 55°F — chilling injury is irreversible and not visible at delivery.",
+        notes: "NC produces 60%+ of US supply. CRITICAL: never below 55°F — chilling injury is irreversible and shows no visible damage at delivery. Claims surface at retail weeks later. This is the #1 source of sweet potato claim disputes.",
         shippers: [
           { name: "Nash Produce", location: "Nashville, NC", note: "One of the largest sweet potato grower-shippers in the US; strong NC→Northeast corridor Oct–Apr" },
           { name: "Pope Farms", location: "Faison, NC", note: "Established Duplin County grower-shipper; peak Oct–Dec harvest FTL volume, strong East Coast lanes" },
@@ -482,20 +562,24 @@
           { name: "Produce Group LLC (Vardaman area)", location: "Vardaman, MS", note: "MS sweet potato packing shed; Oct–Feb volume, good MS→Midwest lane opportunity" },
         ]},
       { name: "Carrots", emoji: "🥕", category: "Root Vegetables", peakMonths: [0,1,2,3,4,5,6,7,8,9,10,11],
+        urgency: "flexible",
+        carrierReqs: ["Pre-cool to 32°F", "Ethylene-sensitive — never co-load with apples, pears, or tomatoes", "Year-round anchor lane — build dedicated carrier relationships"],
         origins: ["Bakersfield, CA","Holtville, CA","Firebaugh, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Atlanta, GA","Philadelphia, PA","Boston, MA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "CA produces 85%+ of US carrots year-round — Bakersfield/Kern County is the national hub.",
+        notes: "CA produces 85%+ of US carrots year-round — Bakersfield/Kern County is the national hub. One of the most predictable reefer lanes in the country. Ethylene-sensitive — keep away from apples.",
         shippers: [
           { name: "Grimmway Farms", location: "Arvin, CA", note: "Largest carrot grower in the world — enormous year-round FTL reefer demand out of Bakersfield/Arvin" },
           { name: "Bolthouse Farms (Bakersfield Ops)", location: "Bakersfield, CA", note: "Second-largest CA carrot operation; massive FTL volume year-round, one of the most consistent CA accounts" },
           { name: "Cal-Organic Farms (Grimmway)", location: "Bakersfield, CA", note: "Organic carrot division; premium loads with higher revenue per mile, same Bakersfield corridor" },
         ]},
       { name: "Onions", emoji: "🧅", category: "Root Vegetables", peakMonths: [4,5,6,7,8,9,10,11],
+        urgency: "flexible",
+        carrierReqs: ["Strong odor — do not co-load with odor-sensitive produce (especially berries)", "Dry van viable in cooler months", "Reefer required for Vidalia sweet onions"],
         origins: ["Nyssa, OR","Nampa, ID","Vidalia, GA","Rio Grande Valley, TX","Walla Walla, WA","Center, CO"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Los Angeles, CA","Miami, FL","Houston, TX","Atlanta, GA"],
         temp: "32–40°F", equipment: "FTL Reefer / FTL Dry Van",
-        notes: "Idaho-Oregon is the largest domestic source. Vidalia sweet onions peak Apr–Jun — premium product. Dry van viable in cooler months.",
+        notes: "Idaho-Oregon is the largest domestic source. Vidalia sweet onions peak Apr–Jun — premium product with premium rates. Dry van viable in cooler months. Strong odor — never co-load with berries or leafy greens.",
         shippers: [
           { name: "Peri & Sons Farms", location: "Yerington, NV (ID-OR ops)", note: "Large grower-shipper operating in the ID-OR onion belt; high volume May–Nov, strong West Coast and Midwest lanes" },
           { name: "Bland Farms", location: "Glennville, GA", note: "Family-owned Vidalia sweet onion farm; peak Apr–Jun, premium lanes, strong East Coast volume" },
@@ -503,30 +587,36 @@
           { name: "Walla Walla Gardeners' Association", location: "Walla Walla, WA", note: "Grower cooperative; June Walla Walla sweet onion window is short and high-value" },
         ]},
       { name: "Garlic", emoji: "🧄", category: "Specialty", peakMonths: [5,6,7,8,9,10,11],
+        urgency: "flexible",
+        carrierReqs: ["Strong odor — no co-loading with odor-sensitive produce", "Dense product — weight-out loads common", "Dry van preferred; reefer for temperature-sensitive retail pack"],
         origins: ["Gilroy, CA","San Joaquin Valley, CA","Nampa, ID"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Dallas, TX","Miami, FL","Houston, TX"],
         temp: "32°F", equipment: "FTL Dry Van / FTL Reefer",
-        notes: "Gilroy CA is the national hub — harvest Jun–Jul, ships from cold storage through winter. Dense product — max weight loads common.",
+        notes: "Gilroy CA is the national hub — harvest Jun–Jul, ships from cold storage through winter. Dense product — max weight loads common. Strong odor — never co-load with berries.",
         shippers: [
           { name: "Christopher Ranch", location: "Gilroy, CA", note: "Largest domestic garlic grower — the dominant Gilroy shipper; year-round FTL dry van and reefer volume" },
           { name: "The Garlic Company", location: "Bakersfield, CA", note: "Major CA garlic grower-shipper; summer harvest through winter cold storage, consistent lanes" },
           { name: "Valley Farm Management (Nampa ops)", location: "Nampa, ID", note: "ID garlic operation; supplements CA supply Jul–Sep, good ID→Midwest lanes" },
         ]},
       { name: "Pumpkins", emoji: "🎃", category: "Specialty", peakMonths: [8,9,10],
+        urgency: "medium",
+        carrierReqs: ["Keep above 50°F", "Flatbed acceptable for field-run market", "Book lanes by mid-August — window is compressed"],
         origins: ["Morton, IL","Rocky Ford, CO","Kewaunee, WI"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Dallas, TX","Minneapolis, MN","Kansas City, MO"],
         temp: "50–55°F", equipment: "FTL Dry Van / Flatbed",
-        notes: "Compressed Sep–Oct window. Plan lanes by mid-August or miss the window.",
+        notes: "Compressed Sep–Oct window. Plan lanes by mid-August or miss it. IL and WI are the national hubs for both processing and fresh market.",
         shippers: [
           { name: "Tanaka Farms (IL Pumpkin Belt)", location: "Morton, IL", note: "IL processing pumpkin region; Sep–Oct canned pumpkin and fresh market FTL volume — call in August" },
           { name: "Circle H Pumpkins", location: "Kewaunee, WI", note: "WI fresh-market pumpkin grower-shipper; peak Sep, strong Midwest retail flatbed lanes" },
           { name: "Sakata Farms", location: "Brighton, CO", note: "CO pumpkin and specialty squash grower; Aug–Oct dry van and flatbed volume" },
         ]},
       { name: "Butternut Squash", emoji: "🧡", category: "Specialty", peakMonths: [7,8,9,10,11],
+        urgency: "medium",
+        carrierReqs: ["Never below 50°F — chilling injury", "Dense product — weight-out loads common", "Temp-controlled dry preferred over reefer"],
         origins: ["Olathe, CO","Center, CO","Salinas, CA","Klamath Falls, OR"],
         destinations: ["Chicago, IL","New York, NY","Philadelphia, PA","Boston, MA","Dallas, TX","Denver, CO"],
         temp: "50–60°F", equipment: "FTL Dry Van / Temp-Controlled",
-        notes: "CO San Luis Valley is premium — Olathe ships Aug–Nov. Do not refrigerate below 50°F. Dense product — weight-out loads common.",
+        notes: "CO San Luis Valley is premium — Olathe ships Aug–Nov. Do not refrigerate below 50°F. Dense product — weight-out loads common. Temp-controlled dry preferred over standard reefer.",
         shippers: [
           { name: "Olathe Produce (Kinikin Processing)", location: "Olathe, CO", note: "Premium CO butternut squash packer; Aug–Nov, strong Denver, Chicago, and East Coast lanes" },
           { name: "High Desert Farms", location: "Center, CO", note: "San Luis Valley grower-shipper; butternut and other winter squash, Sep–Nov FTL volume" },
@@ -548,6 +638,161 @@
       );
     }
 
+    function UrgencyBadge({ level, size = "sm" }) {
+      const cfg = URGENCY_CONFIG[level] || URGENCY_CONFIG.medium;
+      const isLg = size === "lg";
+      return (
+        <span style={{
+          display: "inline-flex", alignItems: "center", gap: 4,
+          padding: isLg ? "3px 8px" : "2px 6px",
+          background: cfg.bg,
+          border: `1px solid ${cfg.color}33`,
+          borderRadius: 3,
+          fontSize: isLg ? 11 : 10,
+          fontWeight: 700,
+          color: cfg.color,
+          letterSpacing: "0.08em",
+          fontFamily: "monospace",
+          flexShrink: 0,
+        }}>
+          <span style={{ width: 5, height: 5, borderRadius: "50%", background: cfg.color, display: "inline-block", flexShrink: 0 }}></span>
+          {cfg.label}
+        </span>
+      );
+    }
+
+    function CarrierReqsPanel({ reqs }) {
+      if (!reqs || reqs.length === 0) return null;
+      return (
+        <div style={{ marginTop: 8, padding: "8px 9px", background: "#050a14", border: "1px solid #0d1828", borderRadius: 3 }}>
+          <div style={{ fontSize: 10, color: "#2a4a7a", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 6 }}>🚛 Carrier Requirements</div>
+          {reqs.map((r, i) => (
+            <div key={i} style={{ display: "flex", gap: 6, alignItems: "flex-start", marginBottom: 4, fontSize: 11, color: "#3a6a9a", lineHeight: 1.4 }}>
+              <span style={{ color: "#1a4070", flexShrink: 0, marginTop: 1 }}>▸</span>
+              <span>{r}</span>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    function SeasonBar({ peakMonths, selectedMonth, compact = false }) {
+      return (
+        <div style={{ display: "flex", gap: 2, marginTop: compact ? 4 : 6 }}>
+          {MONTHS.map((m, i) => (
+            <div key={m} title={m} style={{
+              flex: 1, height: compact ? 3 : 4, borderRadius: 1,
+              background: peakMonths.includes(i)
+                ? (i === selectedMonth ? "#4a8acc" : "#0e2650")
+                : "#080c18"
+            }} />
+          ))}
+        </div>
+      );
+    }
+
+    function UpcomingTab({ selectedMonth }) {
+      const fwdMonths = [1,2,3,4].map(i => (selectedMonth + i) % 12);
+
+      const startingSoon = useMemo(() => PRODUCE.filter(p => {
+        if (p.peakMonths.includes(selectedMonth)) return false;
+        return fwdMonths.some(m => p.peakMonths.includes(m));
+      }).map(p => {
+        const monthsUntil = fwdMonths.findIndex(m => p.peakMonths.includes(m)) + 1;
+        return { ...p, monthsUntil };
+      }).sort((a, b) => {
+        if (a.monthsUntil !== b.monthsUntil) return a.monthsUntil - b.monthsUntil;
+        const order = { critical: 0, high: 1, medium: 2, flexible: 3 };
+        return (order[a.urgency] || 2) - (order[b.urgency] || 2);
+      }), [selectedMonth]);
+
+      const windingDown = useMemo(() => PRODUCE.filter(p => {
+        if (!p.peakMonths.includes(selectedMonth)) return false;
+        return [1, 2].some(i => !p.peakMonths.includes((selectedMonth + i) % 12));
+      }).map(p => {
+        const monthsLeft = [1,2,3].findIndex(i => !p.peakMonths.includes((selectedMonth + i) % 12));
+        return { ...p, monthsLeft: monthsLeft === -1 ? 3 : monthsLeft };
+      }).sort((a, b) => a.monthsLeft - b.monthsLeft), [selectedMonth]);
+
+      const [openShippers, setOpenShippers] = useState({});
+      const toggle = (key) => setOpenShippers(prev => ({ ...prev, [key]: !prev[key] }));
+
+      const monthLabel = (n) => n === 1 ? "1 month" : `${n} months`;
+
+      return (
+        <div style={{ flex: 1, overflowY: "auto" }}>
+          <div style={{ padding: "10px 12px 6px", borderBottom: "1px solid #0f1828" }}>
+            <div style={{ fontSize: 11, color: "#2a4a7a", letterSpacing: "0.2em", textTransform: "uppercase" }}>Forward look · {MONTHS[selectedMonth]}</div>
+            <div style={{ fontSize: 11, color: "#1a3060", marginTop: 3 }}>What to build relationships for now</div>
+          </div>
+
+          {startingSoon.length > 0 && (
+            <div style={{ padding: "10px 12px 4px" }}>
+              <div style={{ fontSize: 11, color: "#3a8a4a", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
+                <span>🚀</span> Starting soon · {startingSoon.length} commodities
+              </div>
+              {startingSoon.map(p => (
+                <div key={p.name} style={{ marginBottom: 6, background: "#080c18", border: "1px solid #0e1830", borderRadius: 4, overflow: "hidden" }}>
+                  <div style={{ padding: "8px 10px", borderLeft: `3px solid ${URGENCY_CONFIG[p.urgency]?.color || "#4a8acc"}` }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 6, marginBottom: 3 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <span style={{ fontSize: 14 }}>{p.emoji}</span>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: "#90c8f0" }}>{p.name}</span>
+                      </div>
+                      <UrgencyBadge level={p.urgency} />
+                    </div>
+                    <div style={{ fontSize: 11, color: "#3a9a5a", marginBottom: 3 }}>
+                      Starts in <strong style={{ color: "#5aaa7a" }}>{monthLabel(p.monthsUntil)}</strong> · {MONTHS[(selectedMonth + p.monthsUntil) % 12]}
+                    </div>
+                    <SeasonBar peakMonths={p.peakMonths} selectedMonth={selectedMonth} compact />
+                    <div style={{ marginTop: 6 }}>
+                      <div style={{ fontSize: 10, color: "#1e3a60", marginBottom: 3, letterSpacing: "0.1em", textTransform: "uppercase" }}>Call first:</div>
+                      {p.shippers?.slice(0, 2).map(s => (
+                        <div key={s.name} style={{ fontSize: 11, color: "#4a7acc", marginBottom: 2 }}>
+                          📞 <strong>{s.name}</strong> · {s.location}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {windingDown.length > 0 && (
+            <div style={{ padding: "10px 12px 4px", borderTop: startingSoon.length > 0 ? "1px solid #0f1828" : "none" }}>
+              <div style={{ fontSize: 11, color: "#9a6a2a", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8, display: "flex", alignItems: "center", gap: 6 }}>
+                <span>⏳</span> Winding down · {windingDown.length} commodities
+              </div>
+              {windingDown.map(p => (
+                <div key={p.name} style={{ marginBottom: 6, background: "#080c18", border: "1px solid #2a1a00", borderRadius: 4, overflow: "hidden" }}>
+                  <div style={{ padding: "8px 10px", borderLeft: "3px solid #8a5020" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 6, marginBottom: 3 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <span style={{ fontSize: 14 }}>{p.emoji}</span>
+                        <span style={{ fontSize: 13, fontWeight: 700, color: "#c09060" }}>{p.name}</span>
+                      </div>
+                      <span style={{ fontSize: 10, color: "#8a5020", fontFamily: "monospace", background: "#1a0e00", border: "1px solid #3a2000", padding: "2px 6px", borderRadius: 3 }}>
+                        ~{monthLabel(p.monthsLeft)} left
+                      </span>
+                    </div>
+                    <div style={{ fontSize: 11, color: "#7a5020" }}>Book remaining capacity now before season closes</div>
+                    <SeasonBar peakMonths={p.peakMonths} selectedMonth={selectedMonth} compact />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {startingSoon.length === 0 && windingDown.length === 0 && (
+            <div style={{ padding: "30px 20px", textAlign: "center", color: "#182e58", fontSize: 13, lineHeight: 1.8 }}>
+              No major seasonal transitions<br/>in the next 4 months.
+            </div>
+          )}
+        </div>
+      );
+    }
+
     function ProduceHeatMap() {
       const [selectedMonth, setSelectedMonth] = useState(currentMonth);
       const [statePaths, setStatePaths] = useState(null);
@@ -560,6 +805,8 @@
       const [sidebarTab, setSidebarTab] = useState("commodities");
       const [odOrigin, setOdOrigin] = useState(null);
       const [odDest, setOdDest] = useState(null);
+      const [odMode, setOdMode] = useState("origin"); // "origin" | "truck"
+      const [truckLocation, setTruckLocation] = useState(null);
       const [showShippers, setShowShippers] = useState({});
       const containerRef = useRef(null);
       const svgRef = useRef(null);
@@ -593,10 +840,7 @@
 
       useEffect(() => {
         if (loading || !svgRef.current) return;
-        const zoom = d3.zoom().scaleExtent([1, 12]).filter(e => {
-          if (e.type === "wheel") return e.ctrlKey;
-          return true;
-        }).on("zoom", (e) => {
+        const zoom = d3.zoom().scaleExtent([1, 12]).on("zoom", (e) => {
           setZoomTransform({ k: e.transform.k, x: e.transform.x, y: e.transform.y });
         });
         zoomBehaviorRef.current = zoom;
@@ -632,6 +876,8 @@
       }, [activeProduce]);
 
       const selectedData = selectedProduce ? PRODUCE.find(p => p.name === selectedProduce) : null;
+
+      // O/D origin-first
       const odOriginList = useMemo(() => {
         const set = new Set();
         activeProduce.forEach(p => p.origins.forEach(o => { if (ORIGIN_COORDS[o]) set.add(o); }));
@@ -649,8 +895,61 @@
       }, [odOrigin, odDest, activeProduce]);
       const odMapDests = odDest ? [odDest] : (odOrigin ? odDestList : []);
 
+      // O/D truck-first (destination-first)
+      const allDestList = useMemo(() => Object.keys(DEST_COORDS).sort(), []);
+      const truckOriginList = useMemo(() => {
+        if (!truckLocation) return [];
+        const set = new Set();
+        activeProduce.forEach(p => {
+          if (p.destinations.includes(truckLocation)) {
+            p.origins.forEach(o => { if (ORIGIN_COORDS[o]) set.add(o); });
+          }
+        });
+        return [...set].sort();
+      }, [truckLocation, activeProduce]);
+      const truckLaneCommodities = useMemo(() => {
+        if (!truckLocation) return [];
+        return activeProduce.filter(p => p.destinations.includes(truckLocation));
+      }, [truckLocation, activeProduce]);
+      // Group truck commodities by origin
+      const truckByOrigin = useMemo(() => {
+        if (!truckLocation) return [];
+        const map = {};
+        truckLaneCommodities.forEach(p => {
+          p.origins.forEach(o => {
+            if (!ORIGIN_COORDS[o]) return;
+            if (!map[o]) map[o] = { origin: o, commodities: [] };
+            if (p.destinations.includes(truckLocation)) map[o].commodities.push(p);
+          });
+        });
+        return Object.values(map).sort((a, b) => b.commodities.length - a.commodities.length);
+      }, [truckLocation, truckLaneCommodities]);
+
       const heatColor = (count) => count >= 7 ? "#ffffff" : count >= 5 ? "#88ddff" : count >= 3 ? "#00aaff" : count >= 2 ? "#0088ff" : "#0055ff";
       const heatRadius = (count) => count >= 7 ? 64 : count >= 5 ? 52 : count >= 3 ? 40 : count >= 2 ? 30 : 20;
+
+      // Map highlight logic for truck mode
+      const mapHighlightOrigins = sidebarTab === "od" && odMode === "truck" && truckLocation
+        ? truckOriginList
+        : sidebarTab === "od" && odOrigin ? [odOrigin]
+        : sidebarTab === "commodities" && selectedData ? selectedData.origins
+        : [];
+
+      const mapShowDests = sidebarTab === "od" && odMode === "truck" && truckLocation
+        ? [truckLocation]
+        : sidebarTab === "od" && odMode === "origin"
+        ? odMapDests
+        : sidebarTab === "commodities" && selectedData
+        ? selectedData.destinations
+        : [];
+
+      const mapLanes = sidebarTab === "od" && odMode === "truck" && truckLocation
+        ? truckOriginList.map(o => ({ o, dests: [truckLocation] }))
+        : sidebarTab === "od" && odMode === "origin" && odOrigin
+        ? [{ o: odOrigin, dests: odMapDests }]
+        : sidebarTab === "commodities" && selectedData
+        ? selectedData.origins.map(o => ({ o, dests: selectedData.destinations }))
+        : [];
 
       return (
         <div style={{ fontFamily: "'Courier New', monospace", background: "#06090f", minHeight: "100vh", color: "#b0c8ee", display: "flex", flexDirection: "column" }}>
@@ -660,10 +959,13 @@
               <div style={{ fontSize: 11, letterSpacing: "0.3em", color: "#2a4a7a", textTransform: "uppercase", marginBottom: 2 }}>Resolve Logistics · Internal Tool</div>
               <h1 style={{ margin: 0, fontSize: 22, fontWeight: 700, letterSpacing: "0.06em", color: "#d0e4f8" }}>US Produce Shipping Heat Map</h1>
             </div>
-            <div style={{ display: "flex", gap: 14, fontSize: 13, color: "#3a5a9a", flexWrap: "wrap" }}>
-              <span style={{ display: "flex", alignItems: "center", gap: 4 }}><span style={{ width: 9, height: 9, borderRadius: "50%", background: "#00aaff", display: "inline-block", boxShadow: "0 0 7px #00aaff" }}></span> Origin</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 4 }}><span style={{ width: 7, height: 7, borderRadius: "50%", background: "#00d4ff", display: "inline-block", boxShadow: "0 0 5px #00d4ff" }}></span> Destination</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 4 }}><span style={{ width: 12, height: 2, background: "#3388ff", display: "inline-block", opacity: 0.8 }}></span> Lane</span>
+            <div style={{ display: "flex", gap: 14, fontSize: 13, color: "#3a5a9a", flexWrap: "wrap", alignItems: "center" }}>
+              {Object.entries(URGENCY_CONFIG).map(([k, v]) => (
+                <span key={k} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <span style={{ width: 7, height: 7, borderRadius: "50%", background: v.color, display: "inline-block" }}></span>
+                  <span style={{ color: v.color, fontSize: 11 }}>{v.label}</span>
+                </span>
+              ))}
             </div>
           </div>
 
@@ -712,52 +1014,48 @@
                     {originActivity.map(o => {
                       const coords = ORIGIN_COORDS[o.name]; if (!coords) return null;
                       const pt = projectPoint(coords); if (!pt) return null;
-                      const isHighlighted = odOrigin === o.name || (sidebarTab === "commodities" && selectedData?.origins.includes(o.name));
-                      const isDimmed = (odOrigin && odOrigin !== o.name) || (sidebarTab === "commodities" && selectedData && !selectedData.origins.includes(o.name));
+                      const isHighlighted = mapHighlightOrigins.includes(o.name);
+                      const isDimmed = mapHighlightOrigins.length > 0 && !isHighlighted;
                       return <circle key={`heat-${o.name}`} cx={pt[0]} cy={pt[1]} r={heatRadius(o.count)} fill={isHighlighted ? "#00eeff" : heatColor(o.count)} opacity={isDimmed ? 0.05 : isHighlighted ? 0.6 : 0.28} filter="url(#heatGlow)" style={{ pointerEvents: "none" }} />;
                     })}
-                    {sidebarTab === "commodities" && selectedData && selectedData.origins.map(o => {
+                    {mapLanes.map(({ o, dests }) => {
                       const oCoords = ORIGIN_COORDS[o]; if (!oCoords) return null;
                       const oPt = projectPoint(oCoords); if (!oPt) return null;
-                      return selectedData.destinations.map(d => {
+                      return dests.map(d => {
                         const dCoords = DEST_COORDS[d]; if (!dCoords) return null;
                         const dPt = projectPoint(dCoords); if (!dPt) return null;
+                        const isSelectedLane = (odDest === d || truckLocation === d) && (odOrigin === o || mapHighlightOrigins.includes(o));
                         const mx = (oPt[0]+dPt[0])/2, my = Math.min(oPt[1],dPt[1])-50;
-                        return <path key={`${o}-${d}`} d={`M ${oPt[0]} ${oPt[1]} Q ${mx} ${my} ${dPt[0]} ${dPt[1]}`} fill="none" stroke="#3388ff" strokeWidth={0.9} opacity={0.3} filter="url(#lineGlow)" style={{ pointerEvents: "none" }} />;
+                        return <path key={`lane-${o}-${d}`} d={`M ${oPt[0]} ${oPt[1]} Q ${mx} ${my} ${dPt[0]} ${dPt[1]}`} fill="none" stroke={isSelectedLane ? "#00ddff" : "#3388ff"} strokeWidth={isSelectedLane ? 1.4 : 0.8} opacity={isSelectedLane ? 0.6 : 0.28} filter="url(#lineGlow)" style={{ pointerEvents: "none" }} />;
                       });
                     })}
-                    {sidebarTab === "od" && odOrigin && odMapDests.map(d => {
-                      const oCoords = ORIGIN_COORDS[odOrigin], dCoords = DEST_COORDS[d]; if (!oCoords || !dCoords) return null;
-                      const oPt = projectPoint(oCoords), dPt = projectPoint(dCoords); if (!oPt || !dPt) return null;
-                      const isSelectedLane = odDest === d;
-                      const mx = (oPt[0]+dPt[0])/2, my = Math.min(oPt[1],dPt[1])-50;
-                      return <path key={`od-${d}`} d={`M ${oPt[0]} ${oPt[1]} Q ${mx} ${my} ${dPt[0]} ${dPt[1]}`} fill="none" stroke={isSelectedLane ? "#00ddff" : "#3388ff"} strokeWidth={isSelectedLane ? 1.4 : 0.8} opacity={isSelectedLane ? 0.6 : (odDest ? 0.12 : 0.28)} filter="url(#lineGlow)" style={{ pointerEvents: "none" }} />;
-                    })}
-                    {sidebarTab === "commodities" && selectedData && selectedData.destinations.map(d => {
+                    {mapShowDests.map(d => {
                       const coords = DEST_COORDS[d]; if (!coords) return null;
                       const pt = projectPoint(coords); if (!pt) return null;
-                      return <g key={`dest-${d}`}><circle cx={pt[0]} cy={pt[1]} r={10} fill="#00d4ff" opacity={0.12} style={{ pointerEvents: "none" }} /><circle cx={pt[0]} cy={pt[1]} r={4} fill="#00d4ff" filter="url(#destGlow)" style={{ pointerEvents: "none" }} /><text x={pt[0]} y={pt[1]-10} textAnchor="middle" fontSize={9} fill="#00d4ff" opacity={0.7} style={{ pointerEvents: "none", fontFamily: "monospace" }}>{d.split(",")[0]}</text></g>;
-                    })}
-                    {sidebarTab === "od" && odOrigin && odMapDests.map(d => {
-                      const coords = DEST_COORDS[d]; if (!coords) return null;
-                      const pt = projectPoint(coords); if (!pt) return null;
-                      const isSel = odDest === d;
-                      return <g key={`oddest-${d}`} onClick={() => setOdDest(isSel ? null : d)} style={{ cursor: "pointer" }}><circle cx={pt[0]} cy={pt[1]} r={14} fill={isSel ? "#00ddff" : "#00d4ff"} opacity={0.08} /><circle cx={pt[0]} cy={pt[1]} r={isSel ? 6 : 4} fill={isSel ? "#00ddff" : "#00d4ff"} filter="url(#destGlow)" stroke={isSel ? "#fff" : "none"} strokeWidth={1} /><text x={pt[0]} y={pt[1]-11} textAnchor="middle" fontSize={9} fill={isSel ? "#00ddff" : "#00d4ff"} opacity={isSel ? 1 : 0.65} style={{ pointerEvents: "none", fontFamily: "monospace", fontWeight: isSel ? "bold" : "normal" }}>{d.split(",")[0]}</text></g>;
+                      const isTruck = d === truckLocation;
+                      return <g key={`dest-${d}`}>
+                        <circle cx={pt[0]} cy={pt[1]} r={isTruck ? 14 : 10} fill={isTruck ? "#ffaa00" : "#00d4ff"} opacity={0.12} style={{ pointerEvents: "none" }} />
+                        <circle cx={pt[0]} cy={pt[1]} r={isTruck ? 6 : 4} fill={isTruck ? "#ffaa00" : "#00d4ff"} filter="url(#destGlow)" style={{ pointerEvents: "none" }} />
+                        <text x={pt[0]} y={pt[1]-10} textAnchor="middle" fontSize={9} fill={isTruck ? "#ffaa00" : "#00d4ff"} opacity={0.7} style={{ pointerEvents: "none", fontFamily: "monospace" }}>{d.split(",")[0]}</text>
+                      </g>;
                     })}
                     {originActivity.map(o => {
                       const coords = ORIGIN_COORDS[o.name]; if (!coords) return null;
                       const pt = projectPoint(coords); if (!pt) return null;
                       const isHovered = hoveredOrigin === o.name;
-                      const isHighlighted = odOrigin === o.name || (sidebarTab === "commodities" && selectedData?.origins.includes(o.name));
-                      const isDimmed = (odOrigin && odOrigin !== o.name) || (sidebarTab === "commodities" && selectedData && !selectedData.origins.includes(o.name));
+                      const isHighlighted = mapHighlightOrigins.includes(o.name);
+                      const isDimmed = mapHighlightOrigins.length > 0 && !isHighlighted;
                       return (
                         <g key={`dot-${o.name}`}
                           onMouseEnter={(e) => { setHoveredOrigin(o.name); setTooltip({ x: e.clientX, y: e.clientY, data: o }); }}
                           onMouseLeave={() => { setHoveredOrigin(null); setTooltip(null); }}
-                          onClick={() => { setSidebarTab("od"); setOdOrigin(odOrigin === o.name ? null : o.name); setOdDest(null); setSelectedProduce(null); }}
+                          onClick={() => { setSidebarTab("od"); setOdMode("origin"); setOdOrigin(odOrigin === o.name ? null : o.name); setOdDest(null); setSelectedProduce(null); }}
                           style={{ cursor: "pointer" }}>
                           {isHovered && <circle cx={pt[0]} cy={pt[1]} r={16} fill={heatColor(o.count)} opacity={0.18} />}
                           <circle cx={pt[0]} cy={pt[1]} r={isHovered || isHighlighted ? 6 : 4} fill={isHighlighted ? "#00eeff" : isDimmed ? "#101828" : heatColor(o.count)} filter="url(#dotGlow)" opacity={isDimmed ? 0.25 : 1} stroke={isHovered || isHighlighted ? "#fff" : "none"} strokeWidth={1} />
+                          {o.count >= 3 && !isDimmed && (
+                            <text x={pt[0]} y={pt[1]-9} textAnchor="middle" fontSize={8} fill={heatColor(o.count)} opacity={0.65} style={{ pointerEvents: "none", fontFamily: "monospace" }}>{o.count}</text>
+                          )}
                         </g>
                       );
                     })}
@@ -782,11 +1080,11 @@
             </div>
 
             {/* Sidebar */}
-            <div style={{ width: 310, borderLeft: "1px solid #0f1828", background: "#06090f", flexShrink: 0, display: "flex", flexDirection: "column" }}>
+            <div style={{ width: 320, borderLeft: "1px solid #0f1828", background: "#06090f", flexShrink: 0, display: "flex", flexDirection: "column" }}>
               <div style={{ display: "flex", borderBottom: "1px solid #0f1828" }}>
-                {[["commodities","🌽 Commodities"],["od","🔀 O/D Pairs"]].map(([tab, label]) => (
+                {[["commodities","🌽 Commodities"],["od","🔀 O/D Pairs"],["upcoming","📅 Upcoming"]].map(([tab, label]) => (
                   <button key={tab} onClick={() => { setSidebarTab(tab); setSelectedProduce(null); setOdOrigin(null); setOdDest(null); }}
-                    style={{ flex: 1, padding: "9px 4px", background: sidebarTab === tab ? "#0a1428" : "transparent", color: sidebarTab === tab ? "#7ab0e8" : "#2a4a7a", border: "none", borderBottom: sidebarTab === tab ? "2px solid #3a6acc" : "2px solid transparent", fontSize: 13, cursor: "pointer", fontFamily: "monospace", fontWeight: sidebarTab === tab ? 700 : 400 }}>
+                    style={{ flex: 1, padding: "9px 4px", background: sidebarTab === tab ? "#0a1428" : "transparent", color: sidebarTab === tab ? "#7ab0e8" : "#2a4a7a", border: "none", borderBottom: sidebarTab === tab ? "2px solid #3a6acc" : "2px solid transparent", fontSize: 12, cursor: "pointer", fontFamily: "monospace", fontWeight: sidebarTab === tab ? 700 : 400 }}>
                     {label}
                   </button>
                 ))}
@@ -805,39 +1103,40 @@
                     {activeProduce.map(p => {
                       const isSelected = selectedProduce === p.name;
                       const shipperOpen = showShippers[p.name];
+                      const urgCfg = URGENCY_CONFIG[p.urgency] || URGENCY_CONFIG.medium;
                       return (
                         <div key={p.name} style={{ marginBottom: 4 }}>
                           <div onClick={() => setSelectedProduce(isSelected ? null : p.name)}
-                            style={{ padding: "8px 10px", background: isSelected ? "#0d1e40" : "#0a0e1a", border: `1px solid ${isSelected ? "#2a5a9a" : "#0e1830"}`, borderRadius: isSelected ? "4px 4px 0 0" : 4, cursor: "pointer" }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                              <span style={{ fontSize: 15 }}>{p.emoji}</span>
-                              <div style={{ flex: 1, minWidth: 0 }}>
-                                <div style={{ fontSize: 13, fontWeight: isSelected ? 700 : 500, color: isSelected ? "#90c8f0" : "#6090c8", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}</div>
-                                <div style={{ fontSize: 11, color: "#1e3a70", marginTop: 1 }}>{p.category} · {p.equipment}</div>
+                            style={{ padding: "8px 10px", background: isSelected ? "#0d1e40" : "#0a0e1a", border: `1px solid ${isSelected ? "#2a5a9a" : "#0e1830"}`, borderRadius: isSelected ? "4px 4px 0 0" : 4, borderLeft: `3px solid ${urgCfg.color}`, cursor: "pointer" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 7, justifyContent: "space-between" }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
+                                <span style={{ fontSize: 15 }}>{p.emoji}</span>
+                                <div style={{ minWidth: 0 }}>
+                                  <div style={{ fontSize: 13, fontWeight: isSelected ? 700 : 500, color: isSelected ? "#90c8f0" : "#6090c8", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}</div>
+                                  <div style={{ fontSize: 10, color: "#1e3a70", marginTop: 1 }}>{p.category} · {p.equipment}</div>
+                                </div>
                               </div>
+                              <UrgencyBadge level={p.urgency} />
                             </div>
+                            <SeasonBar peakMonths={p.peakMonths} selectedMonth={selectedMonth} compact />
                           </div>
                           {isSelected && (
                             <div style={{ padding: "10px 10px", background: "#0a0f20", border: "1px solid #2a5a9a", borderTop: "none", borderRadius: "0 0 4px 4px" }}>
+                              <div style={{ marginBottom: 8 }}><UrgencyBadge level={p.urgency} size="lg" /></div>
                               <div style={{ fontSize: 11, color: "#1a4890", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 4 }}>Origins</div>
                               {p.origins.map(o => <div key={o} style={{ fontSize: 12, color: "#55bbff", marginBottom: 2, paddingLeft: 5, borderLeft: "2px solid #0055ff" }}>{o}</div>)}
                               <div style={{ fontSize: 11, color: "#1a4890", letterSpacing: "0.12em", textTransform: "uppercase", margin: "7px 0 4px" }}>Top Destinations</div>
                               {p.destinations.slice(0,5).map(d => <div key={d} style={{ fontSize: 12, color: "#44ccff", marginBottom: 2, paddingLeft: 5, borderLeft: "2px solid #0077aa" }}>{d}</div>)}
                               <div style={{ fontSize: 12, color: "#2a4a7a", marginTop: 7 }}>🌡️ {p.temp}</div>
+                              <CarrierReqsPanel reqs={p.carrierReqs} />
                               <div style={{ fontSize: 12, color: "#3a6a9a", marginTop: 6, lineHeight: 1.55, fontStyle: "italic" }}>{p.notes}</div>
-
-                              {/* Shippers section */}
                               <div style={{ marginTop: 10, borderTop: "1px solid #0d1e38", paddingTop: 8 }}>
                                 <button onClick={(e) => { e.stopPropagation(); toggleShippers(p.name); }}
                                   style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", background: "transparent", border: "1px solid #0d1e38", borderRadius: 3, padding: "5px 8px", cursor: "pointer", fontFamily: "monospace" }}>
                                   <span style={{ fontSize: 11, color: "#4a7acc", letterSpacing: "0.1em", textTransform: "uppercase" }}>📞 Suggested Shippers ({p.shippers?.length || 0})</span>
                                   <span style={{ fontSize: 12, color: "#2a4a7a" }}>{shipperOpen ? "▲" : "▼"}</span>
                                 </button>
-                                {shipperOpen && (
-                                  <div style={{ marginTop: 6 }}>
-                                    {p.shippers?.map(s => <ShipperCard key={s.name} s={s} />)}
-                                  </div>
-                                )}
+                                {shipperOpen && <div style={{ marginTop: 6 }}>{p.shippers?.map(s => <ShipperCard key={s.name} s={s} />)}</div>}
                               </div>
                             </div>
                           )}
@@ -851,92 +1150,189 @@
               {/* O/D PAIRS TAB */}
               {sidebarTab === "od" && (
                 <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column" }}>
-                  <div style={{ padding: "10px 12px", borderBottom: "1px solid #0f1828" }}>
-                    <div style={{ fontSize: 11, letterSpacing: "0.2em", color: "#2a4a7a", textTransform: "uppercase", marginBottom: 8 }}>Step 1 · Select Origin</div>
-                    <div style={{ fontSize: 12, color: "#1e3a70", marginBottom: 8, fontStyle: "italic" }}>Click a dot on the map or choose below</div>
-                    <select value={odOrigin || ""} onChange={e => { setOdOrigin(e.target.value || null); setOdDest(null); }}
-                      style={{ width: "100%", padding: "5px 8px", background: "#080c18", border: "1px solid #182840", borderRadius: 3, color: odOrigin ? "#55bbff" : "#2a4a7a", fontSize: 13, fontFamily: "monospace", outline: "none", boxSizing: "border-box" }}>
-                      <option value="">— All Origins —</option>
-                      {odOriginList.map(o => <option key={o} value={o}>{o}</option>)}
-                    </select>
+                  {/* Mode toggle */}
+                  <div style={{ display: "flex", borderBottom: "1px solid #0f1828" }}>
+                    <button onClick={() => { setOdMode("origin"); setTruckLocation(null); }}
+                      style={{ flex: 1, padding: "8px", background: odMode === "origin" ? "#0a1828" : "transparent", color: odMode === "origin" ? "#55bbff" : "#2a4a7a", border: "none", borderBottom: odMode === "origin" ? "2px solid #3366aa" : "2px solid transparent", fontSize: 11, cursor: "pointer", fontFamily: "monospace", fontWeight: odMode === "origin" ? 700 : 400 }}>
+                      📍 From Origin
+                    </button>
+                    <button onClick={() => { setOdMode("truck"); setOdOrigin(null); setOdDest(null); }}
+                      style={{ flex: 1, padding: "8px", background: odMode === "truck" ? "#0a1828" : "transparent", color: odMode === "truck" ? "#ffaa44" : "#2a4a7a", border: "none", borderBottom: odMode === "truck" ? "2px solid #aa6600" : "2px solid transparent", fontSize: 11, cursor: "pointer", fontFamily: "monospace", fontWeight: odMode === "truck" ? 700 : 400 }}>
+                      🚛 Truck at Dest
+                    </button>
                   </div>
-                  {odOrigin && (
-                    <div style={{ padding: "10px 12px", borderBottom: "1px solid #0f1828" }}>
-                      <div style={{ fontSize: 11, letterSpacing: "0.2em", color: "#2a4a7a", textTransform: "uppercase", marginBottom: 8 }}>Step 2 · Select Destination</div>
-                      <select value={odDest || ""} onChange={e => setOdDest(e.target.value || null)}
-                        style={{ width: "100%", padding: "5px 8px", background: "#080c18", border: "1px solid #182840", borderRadius: 3, color: odDest ? "#00d4ff" : "#2a4a7a", fontSize: 13, fontFamily: "monospace", outline: "none", boxSizing: "border-box" }}>
-                        <option value="">— All Destinations ({odDestList.length}) —</option>
-                        {odDestList.map(d => <option key={d} value={d}>{d}</option>)}
-                      </select>
-                    </div>
-                  )}
-                  <div style={{ padding: "10px 12px", flex: 1, overflowY: "auto" }}>
-                    {!odOrigin && <div style={{ color: "#182e58", fontSize: 13, textAlign: "center", paddingTop: 30, lineHeight: 1.8 }}>Click an origin dot on the map<br/>to see its lanes and commodities.</div>}
-                    {odOrigin && (
-                      <>
-                        <div style={{ marginBottom: 10 }}>
-                          <div style={{ fontSize: 13, color: "#55bbff", fontWeight: 700, marginBottom: 3 }}>📍 {odOrigin}</div>
-                          {odDest ? <div style={{ fontSize: 13, color: "#00d4ff", fontWeight: 700 }}>→ 🏙️ {odDest}</div>
-                            : <div style={{ fontSize: 12, color: "#2a4a7a" }}>→ {odDestList.length} destinations · {odLaneCommodities.length} commodities</div>}
+
+                  {/* Origin-first mode */}
+                  {odMode === "origin" && (
+                    <>
+                      <div style={{ padding: "10px 12px", borderBottom: "1px solid #0f1828" }}>
+                        <div style={{ fontSize: 11, letterSpacing: "0.2em", color: "#2a4a7a", textTransform: "uppercase", marginBottom: 8 }}>Step 1 · Select Origin</div>
+                        <div style={{ fontSize: 12, color: "#1e3a70", marginBottom: 8, fontStyle: "italic" }}>Click a dot on the map or choose below</div>
+                        <select value={odOrigin || ""} onChange={e => { setOdOrigin(e.target.value || null); setOdDest(null); }}
+                          style={{ width: "100%", padding: "5px 8px", background: "#080c18", border: "1px solid #182840", borderRadius: 3, color: odOrigin ? "#55bbff" : "#2a4a7a", fontSize: 13, fontFamily: "monospace", outline: "none", boxSizing: "border-box" }}>
+                          <option value="">— All Origins —</option>
+                          {odOriginList.map(o => <option key={o} value={o}>{o}</option>)}
+                        </select>
+                      </div>
+                      {odOrigin && (
+                        <div style={{ padding: "10px 12px", borderBottom: "1px solid #0f1828" }}>
+                          <div style={{ fontSize: 11, letterSpacing: "0.2em", color: "#2a4a7a", textTransform: "uppercase", marginBottom: 8 }}>Step 2 · Select Destination</div>
+                          <select value={odDest || ""} onChange={e => setOdDest(e.target.value || null)}
+                            style={{ width: "100%", padding: "5px 8px", background: "#080c18", border: "1px solid #182840", borderRadius: 3, color: odDest ? "#00d4ff" : "#2a4a7a", fontSize: 13, fontFamily: "monospace", outline: "none", boxSizing: "border-box" }}>
+                            <option value="">— All Destinations ({odDestList.length}) —</option>
+                            {odDestList.map(d => <option key={d} value={d}>{d}</option>)}
+                          </select>
                         </div>
-                        {odLaneCommodities.length === 0 && <div style={{ color: "#182e58", fontSize: 13, fontStyle: "italic" }}>No active commodities on this lane this month.</div>}
-                        {odLaneCommodities.map(p => {
-                          const shipperOpen = showShippers[`od-${p.name}`];
-                          return (
-                            <div key={p.name} style={{ padding: "8px 10px", marginBottom: 6, background: "#0a0e1a", border: "1px solid #0e1830", borderRadius: 4 }}>
-                              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
-                                <span style={{ fontSize: 14 }}>{p.emoji}</span>
-                                <div><div style={{ fontSize: 13, fontWeight: 700, color: "#90c8f0" }}>{p.name}</div><div style={{ fontSize: 11, color: "#1e3a70" }}>{p.category}</div></div>
-                              </div>
-                              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, marginBottom: 5 }}>
-                                <div style={{ fontSize: 11, color: "#2a4a7a" }}>🌡️ {p.temp}</div>
-                                <div style={{ fontSize: 11, color: "#2a4a7a" }}>🚛 {p.equipment}</div>
-                              </div>
-                              <div style={{ display: "flex", gap: 2, marginBottom: 6 }}>
-                                {MONTHS.map((m, i) => <div key={m} style={{ flex: 1, height: 4, borderRadius: 1, background: p.peakMonths.includes(i) ? (i === selectedMonth ? "#4a8acc" : "#0e2650") : "#080c18" }} title={m} />)}
-                              </div>
-                              {/* Shippers toggle in O/D view */}
-                              <button onClick={() => toggleShippers(`od-${p.name}`)}
-                                style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", background: "transparent", border: "1px solid #0d1e38", borderRadius: 3, padding: "4px 7px", cursor: "pointer", fontFamily: "monospace", marginBottom: shipperOpen ? 6 : 0 }}>
-                                <span style={{ fontSize: 10, color: "#3a5a8a", letterSpacing: "0.1em", textTransform: "uppercase" }}>📞 Shippers ({p.shippers?.length || 0})</span>
-                                <span style={{ fontSize: 11, color: "#2a4a7a" }}>{shipperOpen ? "▲" : "▼"}</span>
-                              </button>
-                              {shipperOpen && (
-                                <div>
-                                  {p.shippers?.map(s => <ShipperCard key={s.name} s={s} />)}
-                                </div>
-                              )}
+                      )}
+                      <div style={{ padding: "10px 12px", flex: 1, overflowY: "auto" }}>
+                        {!odOrigin && <div style={{ color: "#182e58", fontSize: 13, textAlign: "center", paddingTop: 30, lineHeight: 1.8 }}>Click an origin dot on the map<br/>to see its lanes and commodities.</div>}
+                        {odOrigin && (
+                          <>
+                            <div style={{ marginBottom: 10 }}>
+                              <div style={{ fontSize: 13, color: "#55bbff", fontWeight: 700, marginBottom: 3 }}>📍 {odOrigin}</div>
+                              {odDest ? <div style={{ fontSize: 13, color: "#00d4ff", fontWeight: 700 }}>→ 🏙️ {odDest}</div>
+                                : <div style={{ fontSize: 12, color: "#2a4a7a" }}>→ {odDestList.length} destinations · {odLaneCommodities.length} commodities</div>}
                             </div>
-                          );
-                        })}
-                        {!odDest && odDestList.length > 0 && (
-                          <div style={{ marginTop: 10 }}>
-                            <div style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#1e3a70", marginBottom: 6 }}>All Destinations</div>
-                            {odDestList.map(d => {
-                              const cnt = activeProduce.filter(p => p.origins.includes(odOrigin) && p.destinations.includes(d)).length;
+                            {odLaneCommodities.length === 0 && <div style={{ color: "#182e58", fontSize: 13, fontStyle: "italic" }}>No active commodities on this lane this month.</div>}
+                            {odLaneCommodities.map(p => {
+                              const shipperOpen = showShippers[`od-${p.name}`];
                               return (
-                                <div key={d} onClick={() => setOdDest(d)}
-                                  style={{ padding: "6px 10px", marginBottom: 3, background: "#080c18", border: "1px solid #0f1828", borderRadius: 3, cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                  <span style={{ fontSize: 13, color: "#44ccff" }}>{d}</span>
-                                  <span style={{ fontSize: 11, color: "#1a4890", fontFamily: "monospace" }}>{cnt} crop{cnt !== 1 ? "s" : ""}</span>
+                                <div key={p.name} style={{ padding: "8px 10px", marginBottom: 6, background: "#0a0e1a", border: "1px solid #0e1830", borderRadius: 4, borderLeft: `3px solid ${URGENCY_CONFIG[p.urgency]?.color || "#3a6acc"}` }}>
+                                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5, justifyContent: "space-between" }}>
+                                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                                      <span style={{ fontSize: 14 }}>{p.emoji}</span>
+                                      <div><div style={{ fontSize: 13, fontWeight: 700, color: "#90c8f0" }}>{p.name}</div><div style={{ fontSize: 11, color: "#1e3a70" }}>{p.category}</div></div>
+                                    </div>
+                                    <UrgencyBadge level={p.urgency} />
+                                  </div>
+                                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, marginBottom: 5 }}>
+                                    <div style={{ fontSize: 11, color: "#2a4a7a" }}>🌡️ {p.temp}</div>
+                                    <div style={{ fontSize: 11, color: "#2a4a7a" }}>🚛 {p.equipment}</div>
+                                  </div>
+                                  <SeasonBar peakMonths={p.peakMonths} selectedMonth={selectedMonth} />
+                                  <button onClick={() => toggleShippers(`od-${p.name}`)}
+                                    style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", background: "transparent", border: "1px solid #0d1e38", borderRadius: 3, padding: "4px 7px", cursor: "pointer", fontFamily: "monospace", marginTop: 6 }}>
+                                    <span style={{ fontSize: 10, color: "#3a5a8a", letterSpacing: "0.1em", textTransform: "uppercase" }}>📞 Shippers ({p.shippers?.length || 0})</span>
+                                    <span style={{ fontSize: 11, color: "#2a4a7a" }}>{shipperOpen ? "▲" : "▼"}</span>
+                                  </button>
+                                  {shipperOpen && <div style={{ marginTop: 4 }}>{p.shippers?.map(s => <ShipperCard key={s.name} s={s} />)}</div>}
                                 </div>
                               );
                             })}
-                          </div>
+                            {!odDest && odDestList.length > 0 && (
+                              <div style={{ marginTop: 10 }}>
+                                <div style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#1e3a70", marginBottom: 6 }}>All Destinations</div>
+                                {odDestList.map(d => {
+                                  const cnt = activeProduce.filter(p => p.origins.includes(odOrigin) && p.destinations.includes(d)).length;
+                                  return (
+                                    <div key={d} onClick={() => setOdDest(d)}
+                                      style={{ padding: "6px 10px", marginBottom: 3, background: "#080c18", border: "1px solid #0f1828", borderRadius: 3, cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                      <span style={{ fontSize: 13, color: "#44ccff" }}>{d}</span>
+                                      <span style={{ fontSize: 11, color: "#1a4890", fontFamily: "monospace" }}>{cnt} crop{cnt !== 1 ? "s" : ""}</span>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+                          </>
                         )}
-                      </>
-                    )}
-                  </div>
-                  {(odOrigin || odDest) && (
-                    <div style={{ padding: "8px 12px", borderTop: "1px solid #0f1828" }}>
-                      <button onClick={() => { setOdOrigin(null); setOdDest(null); }}
-                        style={{ width: "100%", padding: "6px", background: "transparent", border: "1px solid #182e58", borderRadius: 3, color: "#2a4a7a", fontSize: 13, fontFamily: "monospace", cursor: "pointer", letterSpacing: "0.1em" }}>
-                        ✕ CLEAR SELECTION
-                      </button>
-                    </div>
+                      </div>
+                      {(odOrigin || odDest) && (
+                        <div style={{ padding: "8px 12px", borderTop: "1px solid #0f1828" }}>
+                          <button onClick={() => { setOdOrigin(null); setOdDest(null); }}
+                            style={{ width: "100%", padding: "6px", background: "transparent", border: "1px solid #182e58", borderRadius: 3, color: "#2a4a7a", fontSize: 13, fontFamily: "monospace", cursor: "pointer", letterSpacing: "0.1em" }}>
+                            ✕ CLEAR SELECTION
+                          </button>
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  {/* Truck-first (destination-first) mode */}
+                  {odMode === "truck" && (
+                    <>
+                      <div style={{ padding: "10px 12px", borderBottom: "1px solid #0f1828" }}>
+                        <div style={{ fontSize: 11, letterSpacing: "0.2em", color: "#aa6600", textTransform: "uppercase", marginBottom: 6 }}>🚛 Where is your truck?</div>
+                        <div style={{ fontSize: 11, color: "#5a3a10", marginBottom: 8 }}>Find loads shipping INTO this city this month</div>
+                        <select value={truckLocation || ""} onChange={e => setTruckLocation(e.target.value || null)}
+                          style={{ width: "100%", padding: "5px 8px", background: "#080c18", border: "1px solid #3a2200", borderRadius: 3, color: truckLocation ? "#ffaa44" : "#5a3a10", fontSize: 13, fontFamily: "monospace", outline: "none", boxSizing: "border-box" }}>
+                          <option value="">— Select city —</option>
+                          {allDestList.map(d => <option key={d} value={d}>{d}</option>)}
+                        </select>
+                      </div>
+                      <div style={{ padding: "10px 12px", flex: 1, overflowY: "auto" }}>
+                        {!truckLocation && <div style={{ color: "#3a2200", fontSize: 13, textAlign: "center", paddingTop: 30, lineHeight: 1.8 }}>Select a destination city<br/>to see inbound loads.</div>}
+                        {truckLocation && truckByOrigin.length === 0 && <div style={{ color: "#3a2200", fontSize: 13, fontStyle: "italic" }}>No active produce lanes into {truckLocation} this month.</div>}
+                        {truckLocation && truckByOrigin.length > 0 && (
+                          <>
+                            <div style={{ marginBottom: 10 }}>
+                              <div style={{ fontSize: 13, color: "#ffaa44", fontWeight: 700, marginBottom: 3 }}>🏙️ {truckLocation}</div>
+                              <div style={{ fontSize: 12, color: "#7a5020" }}>{truckByOrigin.length} pickup origins · {truckLaneCommodities.length} commodities available</div>
+                            </div>
+                            {truckByOrigin.map(({ origin, commodities }) => {
+                              const key = `truck-${origin}`;
+                              const isOpen = showShippers[key];
+                              return (
+                                <div key={origin} style={{ marginBottom: 6, background: "#0a0e1a", border: "1px solid #2a1800", borderRadius: 4, overflow: "hidden" }}>
+                                  <div onClick={() => toggleShippers(key)}
+                                    style={{ padding: "8px 10px", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center", borderLeft: "3px solid #aa6600" }}>
+                                    <div>
+                                      <div style={{ fontSize: 13, fontWeight: 700, color: "#c08040" }}>📍 {origin}</div>
+                                      <div style={{ fontSize: 11, color: "#5a3a10", marginTop: 2 }}>
+                                        {commodities.map(c => c.emoji + " " + c.name).join(" · ")}
+                                      </div>
+                                    </div>
+                                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 4 }}>
+                                      <span style={{ fontSize: 10, color: "#7a5020", fontFamily: "monospace" }}>{commodities.length} crop{commodities.length !== 1 ? "s" : ""}</span>
+                                      <span style={{ fontSize: 11, color: "#3a2800" }}>{isOpen ? "▲" : "▼"}</span>
+                                    </div>
+                                  </div>
+                                  {isOpen && (
+                                    <div style={{ padding: "8px 10px", borderTop: "1px solid #1a0e00" }}>
+                                      {commodities.map(p => {
+                                        const shipperOpen = showShippers[`truckc-${origin}-${p.name}`];
+                                        return (
+                                          <div key={p.name} style={{ marginBottom: 8, paddingBottom: 8, borderBottom: "1px solid #0d0900" }}>
+                                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+                                              <span style={{ fontSize: 13, color: "#90c8f0", fontWeight: 700 }}>{p.emoji} {p.name}</span>
+                                              <UrgencyBadge level={p.urgency} />
+                                            </div>
+                                            <div style={{ fontSize: 11, color: "#2a4a7a", marginBottom: 4 }}>🌡️ {p.temp} · {p.equipment}</div>
+                                            {p.carrierReqs && p.carrierReqs.length > 0 && (
+                                              <div style={{ fontSize: 11, color: "#3a5a8a", marginBottom: 4, fontStyle: "italic" }}>{p.carrierReqs[0]}</div>
+                                            )}
+                                            <button onClick={() => toggleShippers(`truckc-${origin}-${p.name}`)}
+                                              style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", background: "transparent", border: "1px solid #0d1e38", borderRadius: 3, padding: "4px 7px", cursor: "pointer", fontFamily: "monospace" }}>
+                                              <span style={{ fontSize: 10, color: "#3a5a8a", textTransform: "uppercase", letterSpacing: "0.1em" }}>📞 Shippers ({p.shippers?.length || 0})</span>
+                                              <span style={{ fontSize: 11, color: "#2a4a7a" }}>{shipperOpen ? "▲" : "▼"}</span>
+                                            </button>
+                                            {shipperOpen && <div style={{ marginTop: 4 }}>{p.shippers?.filter(s => s.location.includes(origin.split(",")[1]?.trim() || "") || origin.split(",")[0].split(" ").some(w => s.location.includes(w))).concat(p.shippers).slice(0,2).map(s => <ShipperCard key={s.name} s={s} />)}</div>}
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </>
+                        )}
+                      </div>
+                      {truckLocation && (
+                        <div style={{ padding: "8px 12px", borderTop: "1px solid #0f1828" }}>
+                          <button onClick={() => setTruckLocation(null)}
+                            style={{ width: "100%", padding: "6px", background: "transparent", border: "1px solid #3a2200", borderRadius: 3, color: "#5a3a10", fontSize: 13, fontFamily: "monospace", cursor: "pointer", letterSpacing: "0.1em" }}>
+                            ✕ CLEAR TRUCK LOCATION
+                          </button>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               )}
+
+              {/* UPCOMING TAB */}
+              {sidebarTab === "upcoming" && <UpcomingTab selectedMonth={selectedMonth} />}
             </div>
           </div>
 
@@ -948,7 +1344,7 @@
                 <span style={{ width: 10, height: 10, borderRadius: "50%", background: color, display: "inline-block", boxShadow: `0 0 5px ${color}` }}></span>{label} crop{label !== "1" ? "s" : ""}
               </span>
             ))}
-            <span style={{ marginLeft: "auto", color: "#182e58" }}>Resolve Logistics Internal · {PRODUCE.length} commodities · 📞 click a commodity for suggested shippers</span>
+            <span style={{ marginLeft: "auto", color: "#182e58" }}>Resolve Logistics Internal · {PRODUCE.length} commodities · 📞 click commodity for shippers</span>
           </div>
         </div>
       );
