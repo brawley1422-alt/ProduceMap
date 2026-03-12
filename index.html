@@ -20,355 +20,534 @@
     const currentMonth = new Date().getMonth();
 
     const ORIGIN_COORDS = {
-      "Salinas, CA": [-121.66, 36.68],
-      "Watsonville, CA": [-121.76, 36.91],
-      "Oxnard, CA": [-119.18, 34.20],
-      "Santa Maria, CA": [-120.44, 34.95],
-      "Stockton, CA": [-121.29, 37.96],
-      "Linden, CA": [-121.08, 38.03],
-      "Fresno, CA": [-119.77, 36.74],
-      "Tulare County, CA": [-119.35, 36.21],
-      "San Joaquin Valley, CA": [-119.42, 36.78],
-      "Coachella Valley, CA": [-116.17, 33.68],
-      "Imperial Valley, CA": [-115.35, 33.05],
-      "Blythe, CA": [-114.60, 33.61],
-      "Lake County, CA": [-122.75, 39.10],
-      "Sacramento Valley, CA": [-121.49, 38.58],
-      "Gilroy, CA": [-121.57, 37.00],
-      "Bakersfield, CA": [-119.02, 35.37],
-      "Firebaugh, CA": [-120.46, 36.86],
-      "Lompoc, CA": [-120.46, 34.64],
-      "Ventura County, CA": [-119.07, 34.28],
-      "Brawley, CA": [-115.53, 32.98],
-      "El Centro, CA": [-115.56, 32.79],
-      "Lodi, CA": [-121.27, 38.13],
-      "Dinuba, CA": [-119.39, 36.54],
-      "Reedley, CA": [-119.45, 36.60],
-      "Selma, CA": [-119.61, 36.57],
-      "Holtville, CA": [-115.38, 32.81],
-      "Oxnard, CA": [-119.18, 34.20],
-      "Homestead, FL": [-80.50, 25.47],
-      "Plant City, FL": [-82.12, 28.02],
-      "Immokalee, FL": [-81.42, 26.42],
-      "Belle Glade, FL": [-80.67, 26.68],
-      "Polk County, FL": [-81.95, 28.04],
-      "Indian River, FL": [-80.48, 27.68],
-      "Hastings, FL": [-81.51, 29.71],
-      "Palmetto, FL": [-82.57, 27.52],
-      "Lake Wales, FL": [-81.59, 27.90],
-      "Wauchula, FL": [-81.81, 27.55],
-      "Zellwood, FL": [-81.61, 28.72],
-      "Sarasota County, FL": [-82.45, 27.34],
-      "Yuma, AZ": [-114.63, 32.69],
-      "Nogales, AZ": [-110.94, 31.34],
-      "Yakima, WA": [-120.51, 46.60],
-      "Wenatchee, WA": [-120.31, 47.42],
-      "Walla Walla, WA": [-118.34, 46.06],
-      "Whatcom County, WA": [-122.40, 48.85],
-      "Pasco, WA": [-119.10, 46.24],
-      "Skagit Valley, WA": [-122.34, 48.42],
-      "Medford, OR": [-122.87, 42.33],
-      "Hood River, OR": [-121.52, 45.71],
-      "Hermiston, OR": [-119.29, 45.84],
-      "Nyssa, OR": [-117.00, 43.88],
-      "Klamath Falls, OR": [-121.78, 42.22],
-      "Idaho Falls, ID": [-112.03, 43.49],
-      "Nampa, ID": [-116.56, 43.57],
-      "Twin Falls, ID": [-114.46, 42.56],
-      "Buhl, ID": [-114.76, 42.60],
-      "Cordele, GA": [-83.78, 31.96],
-      "Fort Valley, GA": [-83.89, 32.55],
-      "Alma, GA": [-82.46, 31.54],
-      "Vidalia, GA": [-82.41, 32.21],
-      "Tifton, GA": [-83.51, 31.45],
-      "Spartanburg, SC": [-81.93, 34.95],
-      "Faison, NC": [-78.12, 35.12],
-      "Chadbourn, NC": [-78.83, 34.32],
-      "Elizabethtown, NC": [-78.60, 34.63],
-      "Rocky Mount, NC": [-77.79, 35.94],
-      "Goldsboro, NC": [-77.99, 35.38],
-      "Martinsburg, WV": [-77.96, 39.46],
-      "Winchester, VA": [-78.16, 39.19],
-      "Hammonton, NJ": [-74.80, 39.64],
-      "Aroostook County, ME": [-68.01, 46.65],
-      "Vardaman, MS": [-89.18, 33.88],
-      "Chilton County, AL": [-86.72, 32.85],
-      "Rio Grande Valley, TX": [-98.23, 26.20],
-      "Pecos, TX": [-103.49, 31.42],
-      "Lubbock, TX": [-101.86, 33.58],
-      "Uvalde, TX": [-99.79, 29.21],
-      "Laredo, TX": [-99.51, 27.51],
-      "Edinburg, TX": [-98.16, 26.30],
-      "Rocky Ford, CO": [-103.72, 38.05],
-      "Greeley, CO": [-104.71, 40.42],
-      "Grand Junction, CO": [-108.55, 39.06],
-      "Center, CO": [-106.10, 37.75],
-      "Olathe, CO": [-107.98, 38.60],
-      "Red River Valley, ND": [-97.08, 47.92],
-      "Rochelle, IL": [-89.07, 41.92],
-      "Traverse City, MI": [-85.62, 44.76],
-      "Grand Rapids, MI": [-85.66, 42.96],
-      "Stockbridge, MI": [-84.18, 42.45],
-      "Eau Claire, WI": [-91.50, 44.81],
-      "Door County, WI": [-87.28, 44.95],
-      "Kewaunee, WI": [-87.50, 44.46],
-      "Morton, IL": [-89.46, 40.61],
-      "San Diego County, CA": [-117.12, 32.88],
-      "Stockton, CA": [-121.29, 37.96],
+      "Salinas, CA": [-121.66, 36.68], "Watsonville, CA": [-121.76, 36.91],
+      "Oxnard, CA": [-119.18, 34.20], "Santa Maria, CA": [-120.44, 34.95],
+      "Stockton, CA": [-121.29, 37.96], "Linden, CA": [-121.08, 38.03],
+      "Fresno, CA": [-119.77, 36.74], "Tulare County, CA": [-119.35, 36.21],
+      "San Joaquin Valley, CA": [-119.42, 36.78], "Coachella Valley, CA": [-116.17, 33.68],
+      "Imperial Valley, CA": [-115.35, 33.05], "Blythe, CA": [-114.60, 33.61],
+      "Sacramento Valley, CA": [-121.49, 38.58], "Gilroy, CA": [-121.57, 37.00],
+      "Bakersfield, CA": [-119.02, 35.37], "Firebaugh, CA": [-120.46, 36.86],
+      "Lompoc, CA": [-120.46, 34.64], "Ventura County, CA": [-119.07, 34.28],
+      "Brawley, CA": [-115.53, 32.98], "El Centro, CA": [-115.56, 32.79],
+      "Lodi, CA": [-121.27, 38.13], "Dinuba, CA": [-119.39, 36.54],
+      "Reedley, CA": [-119.45, 36.60], "Selma, CA": [-119.61, 36.57],
+      "Holtville, CA": [-115.38, 32.81], "San Diego County, CA": [-117.12, 32.88],
+      "Homestead, FL": [-80.50, 25.47], "Plant City, FL": [-82.12, 28.02],
+      "Immokalee, FL": [-81.42, 26.42], "Belle Glade, FL": [-80.67, 26.68],
+      "Polk County, FL": [-81.95, 28.04], "Indian River, FL": [-80.48, 27.68],
+      "Hastings, FL": [-81.51, 29.71], "Palmetto, FL": [-82.57, 27.52],
+      "Lake Wales, FL": [-81.59, 27.90], "Wauchula, FL": [-81.81, 27.55],
+      "Zellwood, FL": [-81.61, 28.72], "Sarasota County, FL": [-82.45, 27.34],
+      "Yuma, AZ": [-114.63, 32.69], "Nogales, AZ": [-110.94, 31.34],
+      "Yakima, WA": [-120.51, 46.60], "Wenatchee, WA": [-120.31, 47.42],
+      "Walla Walla, WA": [-118.34, 46.06], "Whatcom County, WA": [-122.40, 48.85],
+      "Pasco, WA": [-119.10, 46.24], "Skagit Valley, WA": [-122.34, 48.42],
+      "Medford, OR": [-122.87, 42.33], "Hood River, OR": [-121.52, 45.71],
+      "Hermiston, OR": [-119.29, 45.84], "Nyssa, OR": [-117.00, 43.88],
+      "Klamath Falls, OR": [-121.78, 42.22], "Idaho Falls, ID": [-112.03, 43.49],
+      "Nampa, ID": [-116.56, 43.57], "Twin Falls, ID": [-114.46, 42.56],
+      "Buhl, ID": [-114.76, 42.60], "Cordele, GA": [-83.78, 31.96],
+      "Fort Valley, GA": [-83.89, 32.55], "Alma, GA": [-82.46, 31.54],
+      "Vidalia, GA": [-82.41, 32.21], "Tifton, GA": [-83.51, 31.45],
+      "Spartanburg, SC": [-81.93, 34.95], "Faison, NC": [-78.12, 35.12],
+      "Chadbourn, NC": [-78.83, 34.32], "Elizabethtown, NC": [-78.60, 34.63],
+      "Rocky Mount, NC": [-77.79, 35.94], "Goldsboro, NC": [-77.99, 35.38],
+      "Martinsburg, WV": [-77.96, 39.46], "Winchester, VA": [-78.16, 39.19],
+      "Hammonton, NJ": [-74.80, 39.64], "Aroostook County, ME": [-68.01, 46.65],
+      "Vardaman, MS": [-89.18, 33.88], "Chilton County, AL": [-86.72, 32.85],
+      "Rio Grande Valley, TX": [-98.23, 26.20], "Pecos, TX": [-103.49, 31.42],
+      "Lubbock, TX": [-101.86, 33.58], "Uvalde, TX": [-99.79, 29.21],
+      "Laredo, TX": [-99.51, 27.51], "Edinburg, TX": [-98.16, 26.30],
+      "Rocky Ford, CO": [-103.72, 38.05], "Greeley, CO": [-104.71, 40.42],
+      "Grand Junction, CO": [-108.55, 39.06], "Center, CO": [-106.10, 37.75],
+      "Olathe, CO": [-107.98, 38.60], "Red River Valley, ND": [-97.08, 47.92],
+      "Rochelle, IL": [-89.07, 41.92], "Traverse City, MI": [-85.62, 44.76],
+      "Grand Rapids, MI": [-85.66, 42.96], "Stockbridge, MI": [-84.18, 42.45],
+      "Eau Claire, WI": [-91.50, 44.81], "Door County, WI": [-87.28, 44.95],
+      "Kewaunee, WI": [-87.50, 44.46], "Morton, IL": [-89.46, 40.61],
     };
 
     const DEST_COORDS = {
-      "Chicago, IL": [-87.63, 41.88],
-      "New York, NY": [-74.01, 40.71],
-      "Dallas, TX": [-96.80, 32.78],
-      "Atlanta, GA": [-84.39, 33.75],
-      "Philadelphia, PA": [-75.17, 39.95],
-      "Boston, MA": [-71.06, 42.36],
-      "Detroit, MI": [-83.05, 42.33],
-      "Denver, CO": [-104.98, 39.74],
-      "Houston, TX": [-95.37, 29.76],
-      "Los Angeles, CA": [-118.24, 34.05],
-      "Miami, FL": [-80.19, 25.77],
-      "Minneapolis, MN": [-93.27, 44.98],
-      "Memphis, TN": [-90.05, 35.15],
-      "Kansas City, MO": [-94.58, 39.10],
-      "Seattle, WA": [-122.33, 47.61],
-      "Phoenix, AZ": [-112.07, 33.45],
-      "St. Louis, MO": [-90.20, 38.63],
-      "Baltimore, MD": [-76.61, 39.29],
-      "Charlotte, NC": [-80.84, 35.23],
-      "Nashville, TN": [-86.78, 36.17],
-      "Portland, OR": [-122.68, 45.52],
-      "San Francisco, CA": [-122.42, 37.77],
-      "Las Vegas, NV": [-115.14, 36.17],
-      "Pittsburgh, PA": [-79.98, 40.44],
-      "Cincinnati, OH": [-84.51, 39.10],
-      "Cleveland, OH": [-81.69, 41.50],
-      "Indianapolis, IN": [-86.16, 39.77],
-      "Columbus, OH": [-82.99, 39.96],
-      "San Antonio, TX": [-98.49, 29.42],
-      "New Orleans, LA": [-90.07, 29.95],
-      "Tampa, FL": [-82.46, 27.95],
-      "Jacksonville, FL": [-81.66, 30.33],
-      "Richmond, VA": [-77.46, 37.54],
-      "Salt Lake City, UT": [-111.89, 40.76],
+      "Chicago, IL": [-87.63, 41.88], "New York, NY": [-74.01, 40.71],
+      "Dallas, TX": [-96.80, 32.78], "Atlanta, GA": [-84.39, 33.75],
+      "Philadelphia, PA": [-75.17, 39.95], "Boston, MA": [-71.06, 42.36],
+      "Detroit, MI": [-83.05, 42.33], "Denver, CO": [-104.98, 39.74],
+      "Houston, TX": [-95.37, 29.76], "Los Angeles, CA": [-118.24, 34.05],
+      "Miami, FL": [-80.19, 25.77], "Minneapolis, MN": [-93.27, 44.98],
+      "Memphis, TN": [-90.05, 35.15], "Kansas City, MO": [-94.58, 39.10],
+      "Seattle, WA": [-122.33, 47.61], "Phoenix, AZ": [-112.07, 33.45],
+      "St. Louis, MO": [-90.20, 38.63], "Baltimore, MD": [-76.61, 39.29],
+      "Charlotte, NC": [-80.84, 35.23], "Nashville, TN": [-86.78, 36.17],
+      "Portland, OR": [-122.68, 45.52], "San Francisco, CA": [-122.42, 37.77],
+      "Las Vegas, NV": [-115.14, 36.17], "Pittsburgh, PA": [-79.98, 40.44],
+      "Cincinnati, OH": [-84.51, 39.10], "Cleveland, OH": [-81.69, 41.50],
+      "Indianapolis, IN": [-86.16, 39.77], "Columbus, OH": [-82.99, 39.96],
+      "San Antonio, TX": [-98.49, 29.42], "New Orleans, LA": [-90.07, 29.95],
+      "Tampa, FL": [-82.46, 27.95], "Jacksonville, FL": [-81.66, 30.33],
+      "Richmond, VA": [-77.46, 37.54], "Salt Lake City, UT": [-111.89, 40.76],
       "Omaha, NE": [-95.94, 41.26],
     };
 
+    // shippers: { name, location, note }
     const PRODUCE = [
       { name: "Strawberries", emoji: "🍓", category: "Berries", peakMonths: [1,2,3,4,5,6],
         origins: ["Watsonville, CA","Plant City, FL","Oxnard, CA","Brawley, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Atlanta, GA","Philadelphia, PA","Los Angeles, CA"],
         temp: "32–34°F", equipment: "FTL Reefer",
-        notes: "One of the highest-urgency reefer loads you'll book. FL ships Dec–Mar; CA takes over Apr–Oct. 3–5 day transit max — carriers must pre-cool to 32°F before loading. Missed pickup = scrapped load. Premium rates justified." },
+        notes: "One of the highest-urgency reefer loads you'll book. FL ships Dec–Mar; CA takes over Apr–Oct. 3–5 day transit max — carriers must pre-cool to 32°F before loading. Missed pickup = scrapped load. Premium rates justified.",
+        shippers: [
+          { name: "Driscoll's", location: "Watsonville, CA", note: "Largest berry shipper in the world — FTL reefer volume year-round from CA and FL" },
+          { name: "Well-Pict Berries", location: "Watsonville, CA", note: "Premium CA strawberry shipper, strong Midwest/East lanes Feb–Jun" },
+          { name: "Reiter Affiliated Companies", location: "Oxnard, CA", note: "Ships both CA and FL seasons; high volume, consistent FTL needs" },
+          { name: "Florida Strawberry Growers Assoc.", location: "Plant City, FL", note: "Good entry point for FL season contacts Dec–Mar" },
+        ]},
       { name: "Blueberries", emoji: "🫐", category: "Berries", peakMonths: [3,4,5,6,7,8],
         origins: ["Hammonton, NJ","Alma, GA","Stockbridge, MI","Whatcom County, WA","Elizabethtown, NC"],
         destinations: ["New York, NY","Chicago, IL","Boston, MA","Philadelphia, PA","Detroit, MI","Atlanta, GA"],
         temp: "32–34°F", equipment: "FTL Reefer",
-        notes: "Southeast starts April; NJ/NC peak June; Michigan July–Aug; PNW Aug–Sep. Strong demand supports FTL volumes throughout the window. Fragile — carriers need air ride suspension. Good eastbound backhaul opportunity out of GA/NC." },
+        notes: "Southeast starts April; NJ/NC peak June; Michigan July–Aug; PNW Aug–Sep. Fragile — carriers need air ride suspension.",
+        shippers: [
+          { name: "Naturipe Farms", location: "Naples, FL", note: "Multi-origin shipper — covers GA, NC, MI, WA; strong consistent FTL volume Apr–Sep" },
+          { name: "Driscoll's", location: "Watsonville, CA", note: "Books lanes from multiple origins; reliable volume across the whole season" },
+          { name: "Atlantic Blueberry Company", location: "Hammonton, NJ", note: "Major NJ grower/shipper; peak June–July, strong NY/Boston lanes" },
+          { name: "Jasper Wyman & Son", location: "Milbridge, ME", note: "Large Northeast shipper; good NE→Midwest lane potential in Aug" },
+        ]},
       { name: "Cranberries", emoji: "🍒", category: "Berries", peakMonths: [8,9,10,11],
         origins: ["Eau Claire, WI","Door County, WI","Kewaunee, WI"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Philadelphia, PA","Detroit, MI","Minneapolis, MN"],
         temp: "36–40°F", equipment: "FTL Reefer / FTL Dry Van",
-        notes: "Wisconsin produces 60%+ of US cranberries. Harvest Sep–Oct creates a compressed, high-volume window. Thanksgiving surge spikes demand for dry van capacity — book lanes 6–8 weeks early." },
+        notes: "Wisconsin produces 60%+ of US cranberries. Thanksgiving surge spikes dry van capacity — book lanes 6–8 weeks early.",
+        shippers: [
+          { name: "Ocean Spray Cranberries", location: "Middleboro, MA (WI ops)", note: "Dominant cooperative — massive Sep–Oct harvest volume; dry van and reefer" },
+          { name: "Northland Cranberries", location: "Wisconsin Rapids, WI", note: "Large WI grower; peak Sep–Oct, strong Chicago and Northeast lanes" },
+          { name: "Cranberry Network Inc.", location: "Warrens, WI", note: "Mid-size WI shipper worth targeting for spot loads during harvest window" },
+        ]},
       { name: "Cherries", emoji: "🍒", category: "Stone Fruit", peakMonths: [4,5,6,7],
         origins: ["Yakima, WA","Traverse City, MI","Linden, CA","Hood River, OR"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Miami, FL","Boston, MA","Dallas, TX"],
         temp: "30–32°F", equipment: "FTL Reefer",
-        notes: "Extremely compressed 6–8 week window. PNW dominates. High $/lb commodity — shippers pay premium rates, but carrier standards are strict. Pre-cooling and gentle handling non-negotiable." },
+        notes: "Extremely compressed 6–8 week window. High $/lb — shippers pay premium rates but carrier standards are strict.",
+        shippers: [
+          { name: "Stemilt Growers", location: "Wenatchee, WA", note: "One of the largest cherry shippers in the US; strong WA→Midwest/East FTL lanes" },
+          { name: "Rainier Fruit Company", location: "Selah, WA", note: "Premium sweet cherries; books lanes early — reach out by April" },
+          { name: "CMI Orchards", location: "Wenatchee, WA", note: "Major WA tree fruit shipper; consistent FTL needs throughout cherry season" },
+          { name: "Klackle Orchards", location: "Greenville, MI", note: "MI cherry shipper; good local→Midwest lanes in late June–July" },
+        ]},
       { name: "Grapes", emoji: "🍇", category: "Berries", peakMonths: [5,6,7,8,9,10,11],
         origins: ["Coachella Valley, CA","San Joaquin Valley, CA","Lodi, CA"],
         destinations: ["New York, NY","Chicago, IL","Miami, FL","Philadelphia, PA","Dallas, TX","Atlanta, GA"],
         temp: "30–32°F", equipment: "FTL Reefer",
-        notes: "CA produces 90%+ of US table grapes. Coachella Valley starts May; San Joaquin peaks Jul–Oct. Long, reliable season makes this a bread-and-butter FTL reefer lane." },
+        notes: "CA produces 90%+ of US table grapes. Coachella starts May; San Joaquin peaks Jul–Oct. SO2 pads in packaging — ensure carrier is aware.",
+        shippers: [
+          { name: "Pandol Bros.", location: "Delano, CA", note: "Major San Joaquin grape shipper; high FTL volume Jul–Oct, strong East Coast lanes" },
+          { name: "Sunview Vineyards", location: "Delano, CA", note: "Large grower/packer; books consistent lanes to NY, Chicago, Miami" },
+          { name: "Jasmine Vineyards", location: "Dinuba, CA", note: "Reliable mid-season shipper; good relationship-building opportunity" },
+          { name: "Sun World International", location: "Bakersfield, CA", note: "Premium proprietary varieties; longer season, higher rates" },
+        ]},
       { name: "Watermelon", emoji: "🍉", category: "Melons", peakMonths: [4,5,6,7,8],
         origins: ["Cordele, GA","Hermiston, OR","Lubbock, TX","Blythe, CA","Uvalde, TX"],
         destinations: ["Chicago, IL","New York, NY","Atlanta, GA","Memphis, TN","Kansas City, MO","Dallas, TX","Houston, TX"],
         temp: "50–60°F", equipment: "FTL Dry Van / Flatbed",
-        notes: "One of the highest-cube produce loads — 40,000–44,000 lbs on a flatbed or dry van. GA ships May–Jun, TX follows, OR takes over Jul–Aug. Lower rate per mile but high volume makes up for it." },
+        notes: "40,000–44,000 lbs per load. GA ships May–Jun, TX follows, OR takes over Jul–Aug. Good southbound reloads out of GA/TX.",
+        shippers: [
+          { name: "Dulcich Inc. (Sun World)", location: "Lamont, CA", note: "Large CA/TX shipper; consistent flatbed and dry van volume through summer" },
+          { name: "Bedner Growers", location: "Belle Glade, FL", note: "Major FL shipper; opens the season in May — strong lanes to Chicago and Atlanta" },
+          { name: "Oasis Watermelon", location: "Cordele, GA", note: "Central GA — peak June, great GA→Midwest opportunity" },
+          { name: "Mesquite Creek Produce", location: "Uvalde, TX", note: "TX shipper bridging GA and OR seasons; June–July window" },
+        ]},
       { name: "Cantaloupe", emoji: "🍈", category: "Melons", peakMonths: [4,5,6,7,8],
         origins: ["Yuma, AZ","Imperial Valley, CA","Rocky Ford, CO","Pecos, TX","Edinburg, TX"],
         destinations: ["Chicago, IL","Dallas, TX","Houston, TX","Los Angeles, CA","Denver, CO","Kansas City, MO"],
         temp: "36–41°F", equipment: "FTL Reefer",
-        notes: "Southwest dominates May–Aug. AZ/CA→Midwest is the primary corridor. Rocky Ford CO commands a premium for specialty buyers." },
+        notes: "AZ/CA→Midwest is the primary corridor. Rocky Ford CO commands a premium for specialty buyers. Do not co-load with strawberries.",
+        shippers: [
+          { name: "Hess Brothers Fruit", location: "Fresno, CA", note: "Long-running CA/AZ melon shipper; consistent FTL volume May–Aug" },
+          { name: "Rocky Ford Growers Assoc.", location: "Rocky Ford, CO", note: "Premium Rocky Ford cantaloupe; Aug window, strong Denver and Midwest lanes" },
+          { name: "D'Arrigo Bros.", location: "Salinas, CA", note: "Large shipper with melon and leafy green volume — good multi-commodity relationship" },
+          { name: "Western Diversified Produce", location: "Yuma, AZ", note: "AZ shipper; handles early season melons Apr–May from Yuma" },
+        ]},
       { name: "Honeydew", emoji: "🍈", category: "Melons", peakMonths: [5,6,7,8,9],
         origins: ["Imperial Valley, CA","El Centro, CA","Edinburg, TX"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Dallas, TX","Atlanta, GA"],
         temp: "45–50°F", equipment: "FTL Reefer",
-        notes: "Often shipped on the same trucks as cantaloupe — compatible temp requirements. CA Imperial Valley is the main domestic source." },
+        notes: "Often ships on the same trucks as cantaloupe. Longer shelf life (3–4 weeks) reduces transit urgency.",
+        shippers: [
+          { name: "Hess Brothers Fruit", location: "Fresno, CA", note: "Ships honeydew alongside cantaloupe — good package deal for consistent summer lanes" },
+          { name: "Coachella Valley Growers", location: "El Centro, CA", note: "Imperial Valley shipper; peak Jun–Aug, competitive rates" },
+          { name: "Rio Sweet Inc.", location: "Edinburg, TX", note: "TX shipper; bridges seasons between CA and late-summer volume" },
+        ]},
       { name: "Oranges", emoji: "🍊", category: "Citrus", peakMonths: [0,1,2,3,4,10,11],
         origins: ["Polk County, FL","Tulare County, CA","Indian River, FL","Rio Grande Valley, TX"],
         destinations: ["Chicago, IL","New York, NY","Philadelphia, PA","Boston, MA","Atlanta, GA","Detroit, MI"],
         temp: "38–48°F", equipment: "FTL Reefer",
-        notes: "High-volume, reliable reefer lanes Oct–May. FL dominates with multiple trips per week out of Polk/Indian River. CA navel season Dec–May creates strong westbound-to-east opportunities." },
+        notes: "High-volume, reliable reefer lanes Oct–May. FL dominates out of Polk/Indian River. CA navel season Dec–May adds strong westbound-to-east opportunity.",
+        shippers: [
+          { name: "Sunkist Growers", location: "Sherman Oaks, CA", note: "Largest US citrus cooperative — massive CA navel volume Dec–May; consistent FTL needs" },
+          { name: "Citrus World / Florida's Natural", location: "Lake Wales, FL", note: "Major FL juice and fresh orange cooperative; significant reefer lanes Oct–Jun" },
+          { name: "Evans Fruit", location: "Kittitas, WA", note: "Ships CA navels east; worth calling for WA/OR distribution lanes" },
+          { name: "Rio Queen Citrus", location: "Mission, TX", note: "TX citrus shipper Jan–Mar; good opportunity for south TX→Midwest lanes" },
+        ]},
       { name: "Grapefruit", emoji: "🍋", category: "Citrus", peakMonths: [0,1,2,3,10,11],
         origins: ["Indian River, FL","Rio Grande Valley, TX","Coachella Valley, CA"],
         destinations: ["New York, NY","Chicago, IL","Philadelphia, PA","Boston, MA","Detroit, MI","Miami, FL"],
         temp: "50–60°F", equipment: "FTL Reefer",
-        notes: "FL Indian River is the premium source — consistent broker lanes Nov–Apr. TX Rio Grande Valley peaks Jan–Mar and creates strong cross-country opportunities." },
+        notes: "FL Indian River is the premium source — consistent broker lanes Nov–Apr. TX Rio Grande Valley peaks Jan–Mar.",
+        shippers: [
+          { name: "Indian River Select", location: "Vero Beach, FL", note: "Premium Indian River grapefruit shipper; consistent FTL lanes to NY and Boston Nov–Apr" },
+          { name: "Duda Farm Fresh Foods", location: "Oviedo, FL", note: "Large FL multi-commodity shipper; grapefruit plus vegetables — good relationship play" },
+          { name: "Rio Queen Citrus", location: "Mission, TX", note: "TX grapefruit Jan–Mar; south TX→Midwest lanes worth pursuing" },
+          { name: "Sunkist Growers", location: "Sherman Oaks, CA", note: "CA desert grapefruit in spring; supplements FL supply" },
+        ]},
       { name: "Lemons", emoji: "🍋", category: "Citrus", peakMonths: [0,1,2,3,4,5,6,7,8,9,10,11],
         origins: ["Ventura County, CA","Tulare County, CA","Yuma, AZ"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Boston, MA","Atlanta, GA"],
         temp: "50–55°F", equipment: "FTL Reefer",
-        notes: "True year-round commodity — one of the most consistent reefer lanes out of CA. Ventura County leads." },
+        notes: "True year-round commodity — one of the most consistent reefer lanes out of CA. Ventura County leads.",
+        shippers: [
+          { name: "Sunkist Growers", location: "Sherman Oaks, CA", note: "Dominant lemon shipper — year-round volume out of Ventura and Tulare" },
+          { name: "Limoneira Company", location: "Santa Paula, CA", note: "Major CA lemon grower; consistent FTL volume, strong East Coast distribution" },
+          { name: "Wonderful Citrus", location: "Los Angeles, CA", note: "Large Tulare County shipper; year-round lemon and citrus FTL demand" },
+        ]},
       { name: "Limes", emoji: "🍈", category: "Citrus", peakMonths: [0,1,2,3,4,5,6,7,8,9,10,11],
         origins: ["Nogales, AZ","Laredo, TX"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Houston, TX","Miami, FL","Los Angeles, CA"],
         temp: "48–55°F", equipment: "FTL Reefer",
-        notes: "90%+ are Mexican imports — Nogales and Laredo are the only real origin points for a broker. Price-volatile commodity — rates can spike 3–4x in a shortage." },
+        notes: "90%+ Mexican imports. Year-round with summer peak. Rates can spike 3–4x in shortage. Strong Laredo→Houston and Nogales→Chicago corridors.",
+        shippers: [
+          { name: "Capespan North America", location: "Nogales, AZ", note: "Major import broker at Nogales; FTL reefer year-round, high volume" },
+          { name: "Suntreat Packing", location: "Nogales, AZ", note: "Handles large Mexican lime volume at the border; consistent shipper to call" },
+          { name: "Del Monte Fresh Produce", location: "Coral Gables, FL", note: "Distributes limes nationwide; manages significant FTL volume from both crossings" },
+          { name: "Ruiz Seasonal Harvests", location: "Laredo, TX", note: "Laredo-based importer; strong TX/Midwest lanes" },
+        ]},
       { name: "Tangerines / Mandarins", emoji: "🍊", category: "Citrus", peakMonths: [10,11,0,1,2],
         origins: ["Tulare County, CA","Polk County, FL","Brawley, CA"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Philadelphia, PA","Dallas, TX","Atlanta, GA"],
         temp: "38–48°F", equipment: "FTL Reefer",
-        notes: "Holiday season surge makes Nov–Dec a high-demand window. Clementine gift boxes drive enormous retail volume. Book capacity by October." },
+        notes: "Holiday season surge makes Nov–Dec a high-demand window. Clementine gift boxes drive enormous retail volume. Book capacity by October.",
+        shippers: [
+          { name: "Paramount Citrus (Wonderful)", location: "Delano, CA", note: "Dominant Cuties/mandarins brand — enormous FTL volume Nov–Feb out of Tulare County" },
+          { name: "Sun Pacific", location: "Exeter, CA", note: "Satsuma mandarin specialist; peak Nov–Jan, strong retail lanes to all major markets" },
+          { name: "Sunkist Growers", location: "Sherman Oaks, CA", note: "Significant clementine volume Dec–Feb; consistent CA→East lanes during holiday crunch" },
+        ]},
       { name: "Apples", emoji: "🍎", category: "Tree Fruit", peakMonths: [7,8,9,10,11,0,1,2],
         origins: ["Wenatchee, WA","Yakima, WA","Martinsburg, WV","Grand Rapids, MI","Winchester, VA"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Dallas, TX","Miami, FL","Philadelphia, PA","Boston, MA"],
         temp: "30–32°F", equipment: "FTL Reefer",
-        notes: "One of the most dependable year-round reefer lanes in produce. WA ships 60%+ of US supply from cold storage Aug–May." },
+        notes: "One of the most dependable year-round reefer lanes. WA ships 60%+ of US supply from cold storage Aug–May.",
+        shippers: [
+          { name: "Stemilt Growers", location: "Wenatchee, WA", note: "One of the largest apple shippers in the US; year-round FTL lanes to all major markets" },
+          { name: "Rainier Fruit Company", location: "Selah, WA", note: "Premium WA apples; high volume Aug–Apr, strong relationship to develop" },
+          { name: "CMI Orchards", location: "Wenatchee, WA", note: "Large tree fruit shipper; consistent apple FTL demand across WA→Midwest/East corridors" },
+          { name: "Borton & Sons", location: "Yakima, WA", note: "Long-established Yakima Valley shipper; steady apple volume, good for building carrier relationships" },
+        ]},
       { name: "Pears", emoji: "🍐", category: "Tree Fruit", peakMonths: [6,7,8,9,10,11],
         origins: ["Medford, OR","Yakima, WA","Hood River, OR"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Seattle, WA","Denver, CO","Dallas, TX"],
         temp: "29–31°F", equipment: "FTL Reefer",
-        notes: "Oregon Medford/Hood River is the undisputed hub. Ships Aug–Mar from cold storage — reliable lane to build around." },
+        notes: "Oregon Medford/Hood River is the undisputed hub. Ships Aug–Mar from cold storage. Coldest temp in tree fruit — verify carrier controls.",
+        shippers: [
+          { name: "Stemilt Growers", location: "Wenatchee, WA", note: "Ships both WA and OR pears; consistent FTL volume Aug–Mar" },
+          { name: "Diamond Fruit Growers", location: "Hood River, OR", note: "Cooperative in the heart of pear country; strong Hood River→Midwest/East lanes" },
+          { name: "Duckwall-Pooley Fruit Co.", location: "Hood River, OR", note: "Established Hood River shipper; good spot and contract lane opportunities" },
+          { name: "Harry & David", location: "Medford, OR", note: "Premium Medford pears; significant holiday FTL volume Oct–Dec" },
+        ]},
       { name: "Peaches", emoji: "🍑", category: "Stone Fruit", peakMonths: [4,5,6,7,8],
         origins: ["Fresno, CA","Spartanburg, SC","Fort Valley, GA","Grand Junction, CO","Chilton County, AL"],
         destinations: ["New York, NY","Chicago, IL","Philadelphia, PA","Boston, MA","Detroit, MI","Atlanta, GA"],
         temp: "31–32°F", equipment: "FTL Reefer",
-        notes: "Compressed May–Sep season creates strong, time-sensitive lanes. GA/SC leads East Coast early; CA extends through Sep." },
+        notes: "Compressed May–Sep season. GA/SC leads East early; CA extends through Sep. Fragile — transit claims common with inexperienced carriers.",
+        shippers: [
+          { name: "Wawona Packing Co.", location: "Cutler, CA", note: "Largest peach shipper in the US — massive CA FTL volume Jun–Sep, strong East Coast lanes" },
+          { name: "Titan Farms", location: "Ridge Spring, SC", note: "One of the largest East Coast peach shippers; peak May–Jul, strong NE corridor" },
+          { name: "Taylor Orchards", location: "Reynolds, GA", note: "Major GA peach shipper; opens the season May–Jun with strong SE→Northeast lanes" },
+          { name: "Pearson Farm", location: "Fort Valley, GA", note: "Well-known GA peach operation; good for building SE peach relationships" },
+        ]},
       { name: "Nectarines", emoji: "🍑", category: "Stone Fruit", peakMonths: [4,5,6,7,8],
         origins: ["Fresno, CA","Reedley, CA","Dinuba, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Boston, MA","Los Angeles, CA"],
         temp: "31–32°F", equipment: "FTL Reefer",
-        notes: "Virtually all domestic nectarines come from CA San Joaquin Valley. Runs parallel to peach season — same carriers, same lanes." },
+        notes: "Virtually all domestic nectarines from CA San Joaquin Valley. Runs parallel to peach season — same shippers, same lanes.",
+        shippers: [
+          { name: "Wawona Packing Co.", location: "Cutler, CA", note: "Ships both peaches and nectarines; book the relationship and cover both commodities" },
+          { name: "Gerawan Farming", location: "Fresno, CA", note: "Large Fresno area stone fruit shipper; consistent FTL volume through summer" },
+          { name: "Kingsburg Orchards", location: "Kingsburg, CA", note: "Premium stone fruit shipper; strong retail distribution lanes Jun–Aug" },
+        ]},
       { name: "Plums", emoji: "🟣", category: "Stone Fruit", peakMonths: [5,6,7,8,9],
         origins: ["Fresno, CA","San Joaquin Valley, CA","Selma, CA"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Philadelphia, PA","Dallas, TX"],
         temp: "31–32°F", equipment: "FTL Reefer",
-        notes: "CA San Joaquin Valley dominates. Runs alongside peach and nectarine season — good for building full shipper relationships." },
+        notes: "CA San Joaquin dominates. Runs alongside peach/nectarine season — good for building full shipper relationships out of Fresno/Selma.",
+        shippers: [
+          { name: "Gerawan Farming", location: "Fresno, CA", note: "Large multi-stone-fruit shipper; plums alongside peaches and nectarines" },
+          { name: "Pandol Bros.", location: "Delano, CA", note: "Ships both table grapes and stone fruit — good multi-commodity account" },
+          { name: "Kingsburg Orchards", location: "Kingsburg, CA", note: "Premium plum/pluot varieties; specialty retail lanes worth developing" },
+        ]},
       { name: "Avocados", emoji: "🥑", category: "Tree Fruit", peakMonths: [0,1,2,3,4,5,6,7,8,9,10,11],
         origins: ["Nogales, AZ","Laredo, TX","San Diego County, CA","Ventura County, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Houston, TX","Los Angeles, CA","Miami, FL","Atlanta, GA"],
         temp: "45–55°F", equipment: "FTL Reefer",
-        notes: "One of the fastest-growing and most consistent reefer lanes in produce — demand up 300%+ over the past decade. 90%+ Mexican imports via Nogales and Laredo." },
+        notes: "One of the fastest-growing reefer lanes in produce — demand up 300%+ over the past decade. 90%+ Mexican imports via Nogales and Laredo.",
+        shippers: [
+          { name: "Mission Produce", location: "Oxnard, CA", note: "Largest avocado distributor in North America — massive year-round FTL volume from both border crossings" },
+          { name: "West Pak Avocado", location: "Murrieta, CA", note: "Major importer/distributor; significant Nogales and Laredo volume" },
+          { name: "Index Fresh", location: "Bloomington, CA", note: "Large CA-based avocado distributor; consistent FTL needs year-round" },
+          { name: "Calavo Growers", location: "Santa Paula, CA", note: "Publicly traded avocado company; high volume import distribution, strong East Coast lanes" },
+        ]},
       { name: "Mangoes", emoji: "🥭", category: "Tropical", peakMonths: [3,4,5,6,7,8],
         origins: ["Nogales, AZ","Laredo, TX","Rio Grande Valley, TX"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Dallas, TX","Houston, TX","Miami, FL"],
         temp: "50–55°F", equipment: "FTL Reefer",
-        notes: "100% imported — Nogales and Laredo are the only domestic broker pickup points. Extremely chilling-sensitive below 50°F." },
+        notes: "100% imported — Nogales and Laredo are the only domestic broker pickup points. Extremely chilling-sensitive below 50°F.",
+        shippers: [
+          { name: "Brooks Tropicals", location: "Homestead, FL", note: "Major mango importer/distributor; FL distribution hub with Nogales sourcing" },
+          { name: "Ciruli Bros.", location: "Nogales, AZ", note: "Nogales-based importer; high volume Apr–Sep at the border" },
+          { name: "Del Monte Fresh Produce", location: "Coral Gables, FL", note: "Manages large FTL mango volume from both Nogales and Laredo" },
+          { name: "Nature's Pride / Miami Banana", location: "Nogales, AZ", note: "Tropical fruit importer at Nogales; consistent mango FTL demand" },
+        ]},
       { name: "Lettuce", emoji: "🥬", category: "Leafy Greens", peakMonths: [0,1,2,3,4,8,9,10,11],
         origins: ["Salinas, CA","Yuma, AZ","Santa Maria, CA","Imperial Valley, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Atlanta, GA","Miami, FL","Philadelphia, PA","Houston, TX"],
         temp: "32–36°F", equipment: "FTL Reefer",
-        notes: "Highest-volume leafy green in the US — constant FTL demand year-round. The Salinas→Yuma handoff (Oct and Apr) is critical to track." },
+        notes: "Highest-volume leafy green in the US. The Salinas→Yuma handoff (Oct and Apr) creates capacity disruptions — position accordingly.",
+        shippers: [
+          { name: "Tanimura & Antle", location: "Salinas, CA", note: "One of the biggest lettuce shippers in the US; massive FTL volume year-round to all markets" },
+          { name: "Taylor Farms", location: "Salinas, CA", note: "Largest value-added salad operation — enormous reefer volume from both Salinas and Yuma" },
+          { name: "D'Arrigo Bros.", location: "Salinas, CA", note: "Established Salinas shipper; consistent FTL demand, good relationship to develop" },
+          { name: "Dole Fresh Vegetables", location: "Monterey, CA", note: "National distribution — significant CA/AZ reefer volume to all major markets" },
+        ]},
       { name: "Spinach", emoji: "🥬", category: "Leafy Greens", peakMonths: [0,1,2,3,4,8,9,10,11],
         origins: ["Salinas, CA","Yuma, AZ","Santa Maria, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Boston, MA","Atlanta, GA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "Bagged spinach is one of the highest-value leafy green loads — good revenue per mile. 7–10 day shelf life means urgency is real." },
+        notes: "Bagged spinach is one of the highest-value leafy green loads. 7–10 day shelf life means urgency is real.",
+        shippers: [
+          { name: "Taylor Farms", location: "Salinas, CA", note: "Dominant bagged spinach shipper — year-round high-value FTL volume from CA and AZ" },
+          { name: "Earthbound Farm", location: "San Juan Bautista, CA", note: "Organic spinach leader; premium loads, strong retail distribution lanes" },
+          { name: "Lakeside Organic Gardens", location: "Watsonville, CA", note: "Organic fresh spinach; consistent FTL volume to East Coast and Midwest" },
+        ]},
       { name: "Kale", emoji: "🥬", category: "Leafy Greens", peakMonths: [0,1,2,3,4,5,8,9,10,11],
         origins: ["Salinas, CA","Yuma, AZ","Santa Maria, CA"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Philadelphia, PA","Dallas, TX","Atlanta, GA"],
         temp: "32–36°F", equipment: "FTL Reefer",
-        notes: "Demand has exploded over the past decade. Heartier than other leafy greens — 2–3 week shelf life." },
+        notes: "Demand has exploded over the past decade. Heartier than other leafy greens — 2–3 week shelf life reduces urgency slightly.",
+        shippers: [
+          { name: "Taylor Farms", location: "Salinas, CA", note: "Ships kale alongside spinach and lettuce — strong year-round FTL demand" },
+          { name: "Earthbound Farm", location: "San Juan Bautista, CA", note: "Organic kale leader; premium value loads, good retail distribution" },
+          { name: "Dole Fresh Vegetables", location: "Monterey, CA", note: "Large kale volume; distributes to all major markets from CA/AZ" },
+        ]},
       { name: "Broccoli", emoji: "🥦", category: "Brassicas", peakMonths: [0,1,2,3,4,8,9,10,11],
         origins: ["Salinas, CA","Yuma, AZ","Santa Maria, CA","Imperial Valley, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Boston, MA","Atlanta, GA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "High respiration — pre-cooling and top-ice critical. One of the most consistent FTL reefer commodities year-round." },
+        notes: "High respiration — pre-cooling and top-ice critical. One of the most consistent FTL reefer commodities year-round.",
+        shippers: [
+          { name: "Church Brothers Farms", location: "Salinas, CA", note: "Major broccoli shipper — FTL reefer year-round from Salinas and Yuma" },
+          { name: "Taylor Farms", location: "Salinas, CA", note: "Ships broccoli alongside other leafy items — good multi-commodity relationship" },
+          { name: "Ippolito International", location: "Salinas, CA", note: "Mid-size Salinas shipper with consistent broccoli FTL demand" },
+          { name: "Duda Farm Fresh Foods", location: "Oviedo, FL", note: "Multi-commodity FL and CA shipper; good for building dual-region coverage" },
+        ]},
       { name: "Cauliflower", emoji: "🥦", category: "Brassicas", peakMonths: [0,1,2,3,4,9,10,11],
         origins: ["Salinas, CA","Santa Maria, CA","Lompoc, CA","Yuma, AZ"],
         destinations: ["Chicago, IL","New York, NY","Philadelphia, PA","Boston, MA","Dallas, TX","Los Angeles, CA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "Demand surge from low-carb diets has significantly increased FTL volumes over the past 5 years." },
+        notes: "Demand surge from low-carb diets has significantly increased FTL volumes over the past 5 years.",
+        shippers: [
+          { name: "Church Brothers Farms", location: "Salinas, CA", note: "Ships cauliflower and broccoli together — great full-truck mix from Santa Cruz coast" },
+          { name: "Lakeside Organic Gardens", location: "Watsonville, CA", note: "Organic cauliflower specialist; consistent FTL demand with premium pricing" },
+          { name: "Mann Packing", location: "Salinas, CA", note: "Value-added brassica shipper; consistent cauliflower FTL volume to retail DCs" },
+        ]},
       { name: "Cabbage", emoji: "🥬", category: "Brassicas", peakMonths: [0,1,2,3,4,5,9,10,11],
         origins: ["Salinas, CA","Yuma, AZ","Hastings, FL","Rocky Mount, NC"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Atlanta, GA","Miami, FL"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "High-cube, lower $/lb — efficient to fill a truck. St. Patrick's Day demand spike in March is real and predictable." },
+        notes: "High-cube, lower $/lb — efficient to fill a truck. St. Patrick's Day demand spike in March is real and predictable.",
+        shippers: [
+          { name: "Duda Farm Fresh Foods", location: "Oviedo, FL", note: "FL winter cabbage leader; Jan–Apr strong lanes to NY, Chicago, Miami" },
+          { name: "Pacific International Marketing", location: "Sacramento, CA", note: "CA cabbage shipper; year-round volume out of Salinas and Yuma corridors" },
+          { name: "Glades Crop Care", location: "Belle Glade, FL", note: "FL winter vegetable operation; St. Patrick's Day cabbage volumes worth tracking" },
+        ]},
       { name: "Brussels Sprouts", emoji: "🥦", category: "Brassicas", peakMonths: [8,9,10,11,0,1],
         origins: ["Santa Maria, CA","Salinas, CA","Lompoc, CA"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Philadelphia, PA","Dallas, TX","Atlanta, GA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "CA produces 90%+ of US supply. Thanksgiving creates a massive Oct–Nov volume spike. CA→East lanes are long and high-value." },
+        notes: "CA produces 90%+ of US supply. Thanksgiving creates a massive Oct–Nov volume spike. CA→East lanes are long and high-value.",
+        shippers: [
+          { name: "Ocean Mist Farms", location: "Castroville, CA", note: "Largest US artichoke/Brussels sprout shipper — peak Oct–Nov volume surge to East Coast" },
+          { name: "Church Brothers Farms", location: "Salinas, CA", note: "Strong Brussels sprout volume in fall; ships alongside broccoli and cauliflower" },
+          { name: "Mann Packing", location: "Salinas, CA", note: "Value-added specialty veggies including Brussels; consistent fall FTL volume" },
+        ]},
       { name: "Tomatoes", emoji: "🍅", category: "Vegetables", peakMonths: [2,3,4,5,6,7,8,9],
         origins: ["Immokalee, FL","Nogales, AZ","Oxnard, CA","Homestead, FL"],
         destinations: ["New York, NY","Chicago, IL","Dallas, TX","Atlanta, GA","Philadelphia, PA","Houston, TX","Miami, FL"],
         temp: "55–70°F", equipment: "FTL Reefer",
-        notes: "Never below 50°F — chilling ruins texture and flavor. Nogales→Dallas→Chicago is one of the busiest produce corridors in the US." },
+        notes: "Never below 50°F. Nogales→Dallas→Chicago is one of the busiest produce corridors in the US.",
+        shippers: [
+          { name: "Lipman Family Farms", location: "Immokalee, FL", note: "One of the largest tomato growers in the US; year-round FTL from FL, VA, and Nogales" },
+          { name: "Pacific Tomato Growers", location: "Palmetto, FL", note: "Major FL shipper; consistent FTL to NY, Chicago, Philadelphia Oct–Jun" },
+          { name: "Six L's Packing Co.", location: "Immokalee, FL", note: "Long-established Immokalee packer; multi-commodity (tomatoes, peppers, cukes) — great account" },
+          { name: "Nogales-based Importers (Red Sun, Comr.)", location: "Nogales, AZ", note: "Ask about Red Sun Farms and Cora Mexico at the border — dominant Nogales importers" },
+        ]},
       { name: "Bell Peppers", emoji: "🫑", category: "Vegetables", peakMonths: [2,3,4,5,6,7,8,9],
         origins: ["Nogales, AZ","Immokalee, FL","Laredo, TX","Brawley, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Atlanta, GA","Boston, MA"],
         temp: "45–50°F", equipment: "FTL Reefer",
-        notes: "Mexico via Nogales is increasingly dominant — monitor border capacity closely. Do not go below 45°F." },
+        notes: "Mexico via Nogales is increasingly dominant. Red/yellow/orange bells move at 2x premium vs green. Do not go below 45°F.",
+        shippers: [
+          { name: "Six L's Packing Co.", location: "Immokalee, FL", note: "Multi-commodity FL shipper covering peppers, tomatoes, and cucumbers — high value account" },
+          { name: "Pero Family Farms", location: "Delray Beach, FL", note: "Large FL vegetable shipper; peppers, cucumbers, squash — year-round FTL potential" },
+          { name: "Red Sun Farms", location: "Nogales, AZ (import)", note: "Major greenhouse pepper importer via Nogales; premium colored peppers, consistent FTL" },
+          { name: "Mastronardi Produce", location: "Nogales, AZ (import)", note: "Canadian greenhouse giant with large AZ import operation; high-volume year-round" },
+        ]},
       { name: "Cucumbers", emoji: "🥒", category: "Vegetables", peakMonths: [2,3,4,5,6,7,8,9],
         origins: ["Nogales, AZ","Immokalee, FL","Laredo, TX","Palmetto, FL"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Atlanta, GA","Boston, MA"],
         temp: "50–55°F", equipment: "FTL Reefer",
-        notes: "FL and Mexico are co-dominant year-round. Nogales handles the single largest volume of cucumber imports." },
+        notes: "FL and Mexico are co-dominant year-round. Nogales handles the single largest volume of cucumber imports.",
+        shippers: [
+          { name: "Pero Family Farms", location: "Delray Beach, FL", note: "One of the largest FL cucumber shippers; year-round FTL demand, strong NE lanes" },
+          { name: "Southern Valley Fruit & Vegetable", location: "Norman Park, GA", note: "SE vegetable shipper; good opportunity for FL offseason cucumber volume" },
+          { name: "Six L's Packing Co.", location: "Immokalee, FL", note: "Cucumbers alongside tomatoes and peppers — great multi-commodity Immokalee account" },
+          { name: "NatureSweet", location: "San Antonio, TX", note: "Premium greenhouse cucumbers; Laredo-area distribution, high-value consistent loads" },
+        ]},
       { name: "Asparagus", emoji: "🌿", category: "Vegetables", peakMonths: [1,2,3,4,5],
         origins: ["Stockton, CA","Yakima, WA","Nogales, AZ","Pasco, WA"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Philadelphia, PA","Seattle, WA","Dallas, TX"],
         temp: "32–36°F", equipment: "FTL Reefer",
-        notes: "Extremely perishable — 2–3 day shelf life max. Short window, high urgency, good rates." },
+        notes: "Extremely perishable — 2–3 day shelf life. Short window, high urgency, premium rates. Mexican imports via Nogales fill Oct–Feb gap.",
+        shippers: [
+          { name: "Gourmet Trading Company", location: "Los Angeles, CA", note: "Major asparagus importer/distributor; sources from CA, WA, and Nogales — consistent FTL demand" },
+          { name: "Sandrini Ranch", location: "Stockton, CA", note: "Established CA asparagus grower; peak Mar–May, good Stockton→Midwest lane opportunity" },
+          { name: "Stadelman Fruit", location: "Yakima, WA", note: "WA asparagus shipper alongside tree fruit; spring FTL opportunity Apr–May" },
+        ]},
       { name: "Sweet Corn", emoji: "🌽", category: "Vegetables", peakMonths: [4,5,6,7,8],
         origins: ["Belle Glade, FL","Sacramento Valley, CA","Zellwood, FL","Rochelle, IL"],
         destinations: ["Chicago, IL","New York, NY","Philadelphia, PA","Boston, MA","Minneapolis, MN","Atlanta, GA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "One of the most time-sensitive commodities — sugar converts to starch rapidly above 32°F." },
+        notes: "One of the most time-sensitive commodities — sugar converts to starch rapidly above 32°F.",
+        shippers: [
+          { name: "Pero Family Farms", location: "Delray Beach, FL", note: "Major FL sweet corn shipper May–Jun; strong NE lanes, consistent FTL volume" },
+          { name: "Duda Farm Fresh Foods", location: "Oviedo, FL", note: "Large FL corn operation; Zellwood is their hub — peak May, great Chicago/Atlanta lanes" },
+          { name: "Green Giant / Birds Eye (Pinnacle Foods)", location: "Rochelle, IL", note: "IL processing hub but also ships fresh in season; good Midwest sweet corn volume" },
+        ]},
       { name: "Green Beans", emoji: "🫘", category: "Vegetables", peakMonths: [2,3,4,5,6,7,8,9],
         origins: ["Immokalee, FL","Nogales, AZ","Fresno, CA","Wauchula, FL","Laredo, TX"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Atlanta, GA","Boston, MA"],
         temp: "40–45°F", equipment: "FTL Reefer",
-        notes: "High-volume with multiple harvests per season — consistent FTL demand." },
+        notes: "High-volume with multiple harvests per season. FL leads Dec–Apr; CA takes summer; Mexico year-round.",
+        shippers: [
+          { name: "Pero Family Farms", location: "Delray Beach, FL", note: "Multi-commodity FL shipper; green beans alongside cucumbers and peppers" },
+          { name: "Six L's Packing Co.", location: "Immokalee, FL", note: "Winter green bean volume Dec–Apr out of Immokalee; consistent FTL demand" },
+          { name: "Mann Packing", location: "Salinas, CA", note: "CA summer green bean volume; value-added haricot vert adds revenue per load" },
+        ]},
       { name: "Celery", emoji: "🥬", category: "Vegetables", peakMonths: [0,1,2,3,4,5,6,7,8,9,10,11],
         origins: ["Oxnard, CA","Salinas, CA","Sarasota County, FL","Lake Wales, FL"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Boston, MA","Atlanta, GA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "Year-round commodity with steady, predictable FTL volume. Thanksgiving spikes demand significantly Oct–Nov." },
+        notes: "Year-round commodity with steady, predictable FTL volume. Thanksgiving spikes demand significantly Oct–Nov.",
+        shippers: [
+          { name: "Duda Farm Fresh Foods", location: "Oviedo, FL", note: "US celery market leader — year-round volume from both FL and CA; one of the most consistent reefer accounts you can have" },
+          { name: "Church Brothers Farms", location: "Salinas, CA", note: "CA celery volume to complement FL season; good year-round coverage relationship" },
+          { name: "Growers Express", location: "Salinas, CA", note: "Multi-commodity Salinas shipper including celery; consistent FTL demand" },
+        ]},
       { name: "Zucchini / Summer Squash", emoji: "🫑", category: "Vegetables", peakMonths: [2,3,4,5,6,7,8,9],
         origins: ["Nogales, AZ","Immokalee, FL","Fresno, CA","Laredo, TX"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Philadelphia, PA","Atlanta, GA","Los Angeles, CA"],
         temp: "41–50°F", equipment: "FTL Reefer",
-        notes: "High-cube, moderate value — efficient reefer load. Mexico year-round via Nogales." },
+        notes: "High-cube, moderate value. FL and Mexico dominate spring; CA takes summer. Compatible temps with cucumbers and bell peppers.",
+        shippers: [
+          { name: "Pero Family Farms", location: "Delray Beach, FL", note: "Ships summer squash alongside cucumbers and peppers — great package account" },
+          { name: "Six L's Packing Co.", location: "Immokalee, FL", note: "FL winter/spring squash; good combined load opportunity with tomatoes and peppers" },
+          { name: "Cora Mexico / Nogales importers", location: "Nogales, AZ", note: "Mexican squash year-round via Nogales; ask at the border for current volume shippers" },
+        ]},
       { name: "Potatoes", emoji: "🥔", category: "Root Vegetables", peakMonths: [0,1,2,3,7,8,9,10,11],
         origins: ["Idaho Falls, ID","Yakima, WA","Greeley, CO","Red River Valley, ND","Aroostook County, ME","Twin Falls, ID","Buhl, ID"],
         destinations: ["Chicago, IL","Los Angeles, CA","New York, NY","Dallas, TX","Atlanta, GA","Denver, CO","Philadelphia, PA"],
         temp: "40–50°F", equipment: "FTL Reefer / FTL Dry Van",
-        notes: "One of the largest OTR produce lanes in the country by volume. Idaho ships 30%+ of US supply year-round from cold storage." },
+        notes: "One of the largest OTR produce lanes in the country by volume. Idaho ships 30%+ of US supply year-round from cold storage.",
+        shippers: [
+          { name: "J.R. Simplot Company", location: "Boise, ID", note: "One of the largest potato companies in the world — massive FTL volume year-round from Idaho storage" },
+          { name: "Lamb Weston", location: "Eagle, ID", note: "Major processed + fresh potato shipper; enormous ID→nationwide FTL demand" },
+          { name: "King Fresh Produce", location: "Shelley, ID", note: "Fresh potato specialist out of Eastern ID; consistent year-round FTL volume" },
+          { name: "Pomerelle Produce", location: "Burley, ID", note: "Snake River Valley shipper; reliable spot and contract lanes to Midwest and East" },
+        ]},
       { name: "Sweet Potatoes", emoji: "🍠", category: "Root Vegetables", peakMonths: [0,1,2,9,10,11],
         origins: ["Faison, NC","Chadbourn, NC","Vardaman, MS","Tifton, GA","Goldsboro, NC"],
         destinations: ["Chicago, IL","New York, NY","Philadelphia, PA","Boston, MA","Los Angeles, CA","Atlanta, GA"],
         temp: "55–60°F", equipment: "FTL Dry Van / Temp-Controlled",
-        notes: "NC produces 60%+ of US supply. CRITICAL: never below 55°F — hard core chilling injury is irreversible and not visible at delivery." },
+        notes: "NC produces 60%+ of US supply. CRITICAL: never below 55°F — chilling injury is irreversible and not visible at delivery.",
+        shippers: [
+          { name: "Nash Produce", location: "Nashville, NC", note: "One of the largest sweet potato shippers in the US; strong NC→Northeast corridor Oct–Apr" },
+          { name: "L&M Companies", location: "Raleigh, NC", note: "Major NC produce shipper; sweet potatoes plus other SE commodities — good multi-commodity account" },
+          { name: "Covington Farms", location: "Clinton, NC", note: "Mid-size NC sweet potato shipper; good opportunity for building dedicated carrier relationships" },
+          { name: "Pope Farms", location: "Faison, NC", note: "Established Duplin County shipper; peak Oct–Dec harvest volume, strong East Coast lanes" },
+        ]},
       { name: "Carrots", emoji: "🥕", category: "Root Vegetables", peakMonths: [0,1,2,3,4,5,6,7,8,9,10,11],
         origins: ["Bakersfield, CA","Holtville, CA","Firebaugh, CA"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Atlanta, GA","Philadelphia, PA","Boston, MA"],
         temp: "32°F", equipment: "FTL Reefer",
-        notes: "CA produces 85%+ of US carrots year-round — Bakersfield/Kern County is the national hub." },
+        notes: "CA produces 85%+ of US carrots year-round — Bakersfield/Kern County is the national hub.",
+        shippers: [
+          { name: "Bolthouse Farms", location: "Bakersfield, CA", note: "Largest carrot grower in the US — massive year-round FTL reefer demand; one of the most consistent CA accounts" },
+          { name: "Grimmway Farms", location: "Arvin, CA", note: "Second largest US carrot operation; enormous FTL volume year-round, strong lanes to all major markets" },
+          { name: "Cal-Organic Farms", location: "Bakersfield, CA", note: "Organic carrot leader (Grimmway subsidiary); premium loads with higher revenue per mile" },
+        ]},
       { name: "Onions", emoji: "🧅", category: "Root Vegetables", peakMonths: [4,5,6,7,8,9,10,11],
         origins: ["Nyssa, OR","Nampa, ID","Vidalia, GA","Rio Grande Valley, TX","Walla Walla, WA","Center, CO"],
         destinations: ["Chicago, IL","New York, NY","Dallas, TX","Los Angeles, CA","Miami, FL","Houston, TX","Atlanta, GA"],
         temp: "32–40°F", equipment: "FTL Reefer / FTL Dry Van",
-        notes: "Idaho-Oregon region is the largest domestic source. Vidalia sweet onions peak Apr–Jun — premium product, premium lanes." },
+        notes: "Idaho-Oregon is the largest domestic source. Vidalia sweet onions peak Apr–Jun — premium product. Dry van viable in cooler months.",
+        shippers: [
+          { name: "Peri & Sons Farms", location: "Yerington, NV (Snake River ops)", note: "Large Idaho-Oregon onion operation; high volume May–Nov, strong West Coast and Midwest lanes" },
+          { name: "Bland Farms", location: "Glennville, GA", note: "Dominant Vidalia sweet onion brand — peak Apr–Jun, premium rates, strong East Coast lanes" },
+          { name: "Gills Onions", location: "Oxnard, CA", note: "Fresh-cut and whole onion operation; year-round value-added FTL demand" },
+          { name: "National Western Financial (NWF Onions)", location: "Nyssa, OR", note: "Large OR/ID shipper; consistent spot and contract lanes Apr–Oct" },
+        ]},
       { name: "Garlic", emoji: "🧄", category: "Specialty", peakMonths: [5,6,7,8,9,10,11],
         origins: ["Gilroy, CA","San Joaquin Valley, CA","Nampa, ID"],
         destinations: ["Chicago, IL","New York, NY","Los Angeles, CA","Dallas, TX","Miami, FL","Houston, TX"],
         temp: "32°F", equipment: "FTL Dry Van / FTL Reefer",
-        notes: "Gilroy CA is the national hub — harvest Jun–Jul, ships from cold storage through winter. Garlic is dense — max weight loads common." },
+        notes: "Gilroy CA is the national hub — harvest Jun–Jul, ships from cold storage through winter. Dense product — max weight loads common.",
+        shippers: [
+          { name: "Christopher Ranch", location: "Gilroy, CA", note: "Largest US garlic grower — dominant Gilroy shipper with year-round FTL dry van and reefer volume" },
+          { name: "The Garlic Company", location: "Bakersfield, CA", note: "Major CA garlic shipper; summer harvest through winter cold storage — consistent lanes" },
+          { name: "Spice World", location: "Orlando, FL (Gilroy ops)", note: "National garlic distributor; sources from Gilroy, ships nationally with consistent FTL demand" },
+        ]},
       { name: "Pumpkins", emoji: "🎃", category: "Specialty", peakMonths: [8,9,10],
         origins: ["Morton, IL","Rocky Ford, CO","Kewaunee, WI"],
         destinations: ["Chicago, IL","New York, NY","Boston, MA","Dallas, TX","Minneapolis, MN","Kansas City, MO"],
         temp: "50–55°F", equipment: "FTL Dry Van / Flatbed",
-        notes: "Compressed Sep–Oct window. Plan lanes by mid-August or miss the window." },
+        notes: "Compressed Sep–Oct window. Plan lanes by mid-August or miss the window.",
+        shippers: [
+          { name: "Libby's / Seneca Foods", location: "Morton, IL", note: "Morton IL is the world's pumpkin processing capital — massive Sep–Oct canned pumpkin FTL volume" },
+          { name: "Circle H Pumpkins", location: "Kewaunee, WI", note: "WI fresh-market pumpkin shipper; peak Sep, strong Midwest retail lanes" },
+          { name: "Sakata Farms", location: "Brighton, CO", note: "CO pumpkin and specialty squash shipper; Aug–Oct flatbed and dry van volume" },
+        ]},
       { name: "Butternut Squash", emoji: "🧡", category: "Specialty", peakMonths: [7,8,9,10,11],
         origins: ["Olathe, CO","Center, CO","Salinas, CA","Klamath Falls, OR"],
         destinations: ["Chicago, IL","New York, NY","Philadelphia, PA","Boston, MA","Dallas, TX","Denver, CO"],
         temp: "50–60°F", equipment: "FTL Dry Van / Temp-Controlled",
-        notes: "CO San Luis Valley is premium — Olathe ships Aug–Nov. Do not refrigerate below 50°F." },
+        notes: "CO San Luis Valley is premium — Olathe ships Aug–Nov. Do not refrigerate below 50°F. Dense product — weight-out loads common.",
+        shippers: [
+          { name: "Olathe Sweet Corn & Squash", location: "Olathe, CO", note: "Premium CO butternut squash Aug–Nov; strong Denver, Chicago, and East Coast lanes" },
+          { name: "Jacobs Farm / Del Cabo", location: "Pescadero, CA", note: "Organic specialty squash; premium loads, consistent FTL demand to natural retail" },
+          { name: "Lakeside Organic Gardens", location: "Watsonville, CA", note: "CA organic butternut; summer season, strong West Coast and Midwest lanes" },
+        ]},
     ];
 
     const CATEGORIES = [...new Set(PRODUCE.map(p => p.category))].sort();
+
+    function ShipperCard({ s }) {
+      return (
+        <div style={{ padding: "7px 9px", marginBottom: 4, background: "#040810", border: "1px solid #0d1e38", borderRadius: 3, borderLeft: "2px solid #1a4a8a" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 6 }}>
+            <div style={{ fontWeight: 700, fontSize: 12, color: "#7ab0e8" }}>{s.name}</div>
+            <div style={{ fontSize: 10, color: "#1e3a70", whiteSpace: "nowrap", flexShrink: 0 }}>{s.location}</div>
+          </div>
+          <div style={{ fontSize: 11, color: "#3a5a8a", marginTop: 3, lineHeight: 1.45 }}>{s.note}</div>
+        </div>
+      );
+    }
 
     function ProduceHeatMap() {
       const [selectedMonth, setSelectedMonth] = useState(currentMonth);
@@ -382,6 +561,7 @@
       const [sidebarTab, setSidebarTab] = useState("commodities");
       const [odOrigin, setOdOrigin] = useState(null);
       const [odDest, setOdDest] = useState(null);
+      const [showShippers, setShowShippers] = useState({});
       const containerRef = useRef(null);
       const svgRef = useRef(null);
       const [zoomTransform, setZoomTransform] = useState({ k: 1, x: 0, y: 0 });
@@ -414,11 +594,9 @@
 
       useEffect(() => {
         if (loading || !svgRef.current) return;
-        const zoom = d3.zoom()
-          .scaleExtent([1, 12])
-          .on("zoom", (e) => {
-            setZoomTransform({ k: e.transform.k, x: e.transform.x, y: e.transform.y });
-          });
+        const zoom = d3.zoom().scaleExtent([1, 12]).on("zoom", (e) => {
+          setZoomTransform({ k: e.transform.k, x: e.transform.x, y: e.transform.y });
+        });
         zoomBehaviorRef.current = zoom;
         d3.select(svgRef.current).call(zoom);
         return () => d3.select(svgRef.current).on(".zoom", null);
@@ -431,6 +609,8 @@
       const handleZoomIn = () => { if (svgRef.current && zoomBehaviorRef.current) d3.select(svgRef.current).transition().duration(300).call(zoomBehaviorRef.current.scaleBy, 1.6); };
       const handleZoomOut = () => { if (svgRef.current && zoomBehaviorRef.current) d3.select(svgRef.current).transition().duration(300).call(zoomBehaviorRef.current.scaleBy, 0.625); };
       const handleZoomReset = () => { if (svgRef.current && zoomBehaviorRef.current) d3.select(svgRef.current).transition().duration(400).call(zoomBehaviorRef.current.transform, d3.zoomIdentity); };
+
+      const toggleShippers = (name) => setShowShippers(prev => ({ ...prev, [name]: !prev[name] }));
 
       const activeProduce = useMemo(() => PRODUCE.filter(p => {
         const monthMatch = p.peakMonths.includes(selectedMonth);
@@ -450,25 +630,21 @@
       }, [activeProduce]);
 
       const selectedData = selectedProduce ? PRODUCE.find(p => p.name === selectedProduce) : null;
-
       const odOriginList = useMemo(() => {
         const set = new Set();
         activeProduce.forEach(p => p.origins.forEach(o => { if (ORIGIN_COORDS[o]) set.add(o); }));
         return [...set].sort();
       }, [activeProduce]);
-
       const odDestList = useMemo(() => {
         if (!odOrigin) return [];
         const set = new Set();
         activeProduce.forEach(p => { if (p.origins.includes(odOrigin)) p.destinations.forEach(d => { if (DEST_COORDS[d]) set.add(d); }); });
         return [...set].sort();
       }, [odOrigin, activeProduce]);
-
       const odLaneCommodities = useMemo(() => {
         if (!odOrigin) return [];
         return activeProduce.filter(p => p.origins.includes(odOrigin) && (odDest ? p.destinations.includes(odDest) : true));
       }, [odOrigin, odDest, activeProduce]);
-
       const odMapDests = odDest ? [odDest] : (odOrigin ? odDestList : []);
 
       const heatColor = (count) => count >= 7 ? "#ffffff" : count >= 5 ? "#88ddff" : count >= 3 ? "#00aaff" : count >= 2 ? "#0088ff" : "#0055ff";
@@ -476,6 +652,7 @@
 
       return (
         <div style={{ fontFamily: "'Courier New', monospace", background: "#06090f", minHeight: "100vh", color: "#b0c8ee", display: "flex", flexDirection: "column" }}>
+          {/* Header */}
           <div style={{ padding: "14px 20px 10px", borderBottom: "1px solid #0f1828", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
             <div>
               <div style={{ fontSize: 11, letterSpacing: "0.3em", color: "#2a4a7a", textTransform: "uppercase", marginBottom: 2 }}>Resolve Logistics · Internal Tool</div>
@@ -488,6 +665,7 @@
             </div>
           </div>
 
+          {/* Month bar */}
           <div style={{ padding: "10px 20px", borderBottom: "1px solid #0f1828", display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
             <span style={{ fontSize: 11, color: "#2a4a7a", letterSpacing: "0.2em", marginRight: 6, textTransform: "uppercase" }}>Month:</span>
             {MONTHS.map((m, i) => {
@@ -503,6 +681,7 @@
             <span style={{ marginLeft: "auto", fontSize: 13, color: "#2a4a7a" }}>{activeProduce.length} commodities active</span>
           </div>
 
+          {/* Category filter */}
           <div style={{ padding: "8px 20px", borderBottom: "1px solid #0f1828", display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
             <span style={{ fontSize: 11, color: "#2a4a7a", letterSpacing: "0.2em", marginRight: 6, textTransform: "uppercase" }}>Filter:</span>
             {["All", ...CATEGORIES].map(cat => (
@@ -512,6 +691,7 @@
           </div>
 
           <div style={{ display: "flex", flex: 1 }}>
+            {/* Map */}
             <div ref={containerRef} style={{ flex: 1, position: "relative", overflow: "hidden" }}>
               {loading ? (
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 500, color: "#2a4a7a", fontSize: 13, letterSpacing: "0.25em" }}>LOADING MAP…</div>
@@ -599,7 +779,8 @@
               )}
             </div>
 
-            <div style={{ width: 290, borderLeft: "1px solid #0f1828", background: "#06090f", flexShrink: 0, display: "flex", flexDirection: "column" }}>
+            {/* Sidebar */}
+            <div style={{ width: 310, borderLeft: "1px solid #0f1828", background: "#06090f", flexShrink: 0, display: "flex", flexDirection: "column" }}>
               <div style={{ display: "flex", borderBottom: "1px solid #0f1828" }}>
                 {[["commodities","🌽 Commodities"],["od","🔀 O/D Pairs"]].map(([tab, label]) => (
                   <button key={tab} onClick={() => { setSidebarTab(tab); setSelectedProduce(null); setOdOrigin(null); setOdDest(null); }}
@@ -609,6 +790,7 @@
                 ))}
               </div>
 
+              {/* COMMODITIES TAB */}
               {sidebarTab === "commodities" && (
                 <>
                   <div style={{ padding: "10px 12px 6px", borderBottom: "1px solid #0f1828" }}>
@@ -620,24 +802,41 @@
                     {activeProduce.length === 0 && <div style={{ color: "#182e58", fontSize: 13, textAlign: "center", paddingTop: 24 }}>No results</div>}
                     {activeProduce.map(p => {
                       const isSelected = selectedProduce === p.name;
+                      const shipperOpen = showShippers[p.name];
                       return (
-                        <div key={p.name} onClick={() => setSelectedProduce(isSelected ? null : p.name)}
-                          style={{ padding: "8px 10px", marginBottom: 4, background: isSelected ? "#0d1e40" : "#0a0e1a", border: `1px solid ${isSelected ? "#2a5a9a" : "#0e1830"}`, borderRadius: 4, cursor: "pointer" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                            <span style={{ fontSize: 15 }}>{p.emoji}</span>
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                              <div style={{ fontSize: 13, fontWeight: isSelected ? 700 : 500, color: isSelected ? "#90c8f0" : "#6090c8", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}</div>
-                              <div style={{ fontSize: 11, color: "#1e3a70", marginTop: 1 }}>{p.category} · {p.equipment}</div>
+                        <div key={p.name} style={{ marginBottom: 4 }}>
+                          <div onClick={() => setSelectedProduce(isSelected ? null : p.name)}
+                            style={{ padding: "8px 10px", background: isSelected ? "#0d1e40" : "#0a0e1a", border: `1px solid ${isSelected ? "#2a5a9a" : "#0e1830"}`, borderRadius: isSelected ? "4px 4px 0 0" : 4, cursor: "pointer" }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                              <span style={{ fontSize: 15 }}>{p.emoji}</span>
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <div style={{ fontSize: 13, fontWeight: isSelected ? 700 : 500, color: isSelected ? "#90c8f0" : "#6090c8", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.name}</div>
+                                <div style={{ fontSize: 11, color: "#1e3a70", marginTop: 1 }}>{p.category} · {p.equipment}</div>
+                              </div>
                             </div>
                           </div>
                           {isSelected && (
-                            <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid #182840" }}>
+                            <div style={{ padding: "10px 10px", background: "#0a0f20", border: "1px solid #2a5a9a", borderTop: "none", borderRadius: "0 0 4px 4px" }}>
                               <div style={{ fontSize: 11, color: "#1a4890", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 4 }}>Origins</div>
                               {p.origins.map(o => <div key={o} style={{ fontSize: 12, color: "#55bbff", marginBottom: 2, paddingLeft: 5, borderLeft: "2px solid #0055ff" }}>{o}</div>)}
-                              <div style={{ fontSize: 11, color: "#1a4890", letterSpacing: "0.12em", textTransform: "uppercase", margin: "7px 0 4px" }}>Destinations</div>
-                              {p.destinations.slice(0,6).map(d => <div key={d} style={{ fontSize: 12, color: "#44ccff", marginBottom: 2, paddingLeft: 5, borderLeft: "2px solid #0077aa" }}>{d}</div>)}
+                              <div style={{ fontSize: 11, color: "#1a4890", letterSpacing: "0.12em", textTransform: "uppercase", margin: "7px 0 4px" }}>Top Destinations</div>
+                              {p.destinations.slice(0,5).map(d => <div key={d} style={{ fontSize: 12, color: "#44ccff", marginBottom: 2, paddingLeft: 5, borderLeft: "2px solid #0077aa" }}>{d}</div>)}
                               <div style={{ fontSize: 12, color: "#2a4a7a", marginTop: 7 }}>🌡️ {p.temp}</div>
                               <div style={{ fontSize: 12, color: "#3a6a9a", marginTop: 6, lineHeight: 1.55, fontStyle: "italic" }}>{p.notes}</div>
+
+                              {/* Shippers section */}
+                              <div style={{ marginTop: 10, borderTop: "1px solid #0d1e38", paddingTop: 8 }}>
+                                <button onClick={(e) => { e.stopPropagation(); toggleShippers(p.name); }}
+                                  style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", background: "transparent", border: "1px solid #0d1e38", borderRadius: 3, padding: "5px 8px", cursor: "pointer", fontFamily: "monospace" }}>
+                                  <span style={{ fontSize: 11, color: "#4a7acc", letterSpacing: "0.1em", textTransform: "uppercase" }}>📞 Suggested Shippers ({p.shippers?.length || 0})</span>
+                                  <span style={{ fontSize: 12, color: "#2a4a7a" }}>{shipperOpen ? "▲" : "▼"}</span>
+                                </button>
+                                {shipperOpen && (
+                                  <div style={{ marginTop: 6 }}>
+                                    {p.shippers?.map(s => <ShipperCard key={s.name} s={s} />)}
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           )}
                         </div>
@@ -647,6 +846,7 @@
                 </>
               )}
 
+              {/* O/D PAIRS TAB */}
               {sidebarTab === "od" && (
                 <div style={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column" }}>
                   <div style={{ padding: "10px 12px", borderBottom: "1px solid #0f1828" }}>
@@ -678,22 +878,35 @@
                             : <div style={{ fontSize: 12, color: "#2a4a7a" }}>→ {odDestList.length} destinations · {odLaneCommodities.length} commodities</div>}
                         </div>
                         {odLaneCommodities.length === 0 && <div style={{ color: "#182e58", fontSize: 13, fontStyle: "italic" }}>No active commodities on this lane this month.</div>}
-                        {odLaneCommodities.map(p => (
-                          <div key={p.name} style={{ padding: "8px 10px", marginBottom: 6, background: "#0a0e1a", border: "1px solid #0e1830", borderRadius: 4 }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
-                              <span style={{ fontSize: 14 }}>{p.emoji}</span>
-                              <div><div style={{ fontSize: 13, fontWeight: 700, color: "#90c8f0" }}>{p.name}</div><div style={{ fontSize: 11, color: "#1e3a70" }}>{p.category}</div></div>
+                        {odLaneCommodities.map(p => {
+                          const shipperOpen = showShippers[`od-${p.name}`];
+                          return (
+                            <div key={p.name} style={{ padding: "8px 10px", marginBottom: 6, background: "#0a0e1a", border: "1px solid #0e1830", borderRadius: 4 }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
+                                <span style={{ fontSize: 14 }}>{p.emoji}</span>
+                                <div><div style={{ fontSize: 13, fontWeight: 700, color: "#90c8f0" }}>{p.name}</div><div style={{ fontSize: 11, color: "#1e3a70" }}>{p.category}</div></div>
+                              </div>
+                              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, marginBottom: 5 }}>
+                                <div style={{ fontSize: 11, color: "#2a4a7a" }}>🌡️ {p.temp}</div>
+                                <div style={{ fontSize: 11, color: "#2a4a7a" }}>🚛 {p.equipment}</div>
+                              </div>
+                              <div style={{ display: "flex", gap: 2, marginBottom: 6 }}>
+                                {MONTHS.map((m, i) => <div key={m} style={{ flex: 1, height: 4, borderRadius: 1, background: p.peakMonths.includes(i) ? (i === selectedMonth ? "#4a8acc" : "#0e2650") : "#080c18" }} title={m} />)}
+                              </div>
+                              {/* Shippers toggle in O/D view */}
+                              <button onClick={() => toggleShippers(`od-${p.name}`)}
+                                style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center", background: "transparent", border: "1px solid #0d1e38", borderRadius: 3, padding: "4px 7px", cursor: "pointer", fontFamily: "monospace", marginBottom: shipperOpen ? 6 : 0 }}>
+                                <span style={{ fontSize: 10, color: "#3a5a8a", letterSpacing: "0.1em", textTransform: "uppercase" }}>📞 Shippers ({p.shippers?.length || 0})</span>
+                                <span style={{ fontSize: 11, color: "#2a4a7a" }}>{shipperOpen ? "▲" : "▼"}</span>
+                              </button>
+                              {shipperOpen && (
+                                <div>
+                                  {p.shippers?.map(s => <ShipperCard key={s.name} s={s} />)}
+                                </div>
+                              )}
                             </div>
-                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, marginBottom: 5 }}>
-                              <div style={{ fontSize: 11, color: "#2a4a7a" }}>🌡️ {p.temp}</div>
-                              <div style={{ fontSize: 11, color: "#2a4a7a" }}>🚛 {p.equipment}</div>
-                            </div>
-                            <div style={{ display: "flex", gap: 2, marginBottom: 5 }}>
-                              {MONTHS.map((m, i) => <div key={m} style={{ flex: 1, height: 4, borderRadius: 1, background: p.peakMonths.includes(i) ? (i === selectedMonth ? "#4a8acc" : "#0e2650") : "#080c18" }} title={m} />)}
-                            </div>
-                            <div style={{ fontSize: 12, color: "#3a6a9a", lineHeight: 1.5, fontStyle: "italic" }}>{p.notes}</div>
-                          </div>
-                        ))}
+                          );
+                        })}
                         {!odDest && odDestList.length > 0 && (
                           <div style={{ marginTop: 10 }}>
                             <div style={{ fontSize: 11, letterSpacing: "0.15em", textTransform: "uppercase", color: "#1e3a70", marginBottom: 6 }}>All Destinations</div>
@@ -725,6 +938,7 @@
             </div>
           </div>
 
+          {/* Legend */}
           <div style={{ padding: "7px 20px", borderTop: "1px solid #0f1828", display: "flex", gap: 14, alignItems: "center", fontSize: 11, color: "#2a4a7a", letterSpacing: "0.1em", flexWrap: "wrap" }}>
             <span style={{ textTransform: "uppercase" }}>Origin Heat:</span>
             {[["#0055ff","1"],["#0088ff","2"],["#00aaff","3–4"],["#88ddff","5–6"],["#ffffff","7+"]].map(([color, label]) => (
@@ -732,7 +946,7 @@
                 <span style={{ width: 10, height: 10, borderRadius: "50%", background: color, display: "inline-block", boxShadow: `0 0 5px ${color}` }}></span>{label} crop{label !== "1" ? "s" : ""}
               </span>
             ))}
-            <span style={{ marginLeft: "auto", color: "#182e58" }}>Resolve Logistics Internal · {PRODUCE.length} commodities</span>
+            <span style={{ marginLeft: "auto", color: "#182e58" }}>Resolve Logistics Internal · {PRODUCE.length} commodities · 📞 click a commodity for suggested shippers</span>
           </div>
         </div>
       );
