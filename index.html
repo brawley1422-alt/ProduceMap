@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Produce Shipping Map — Resolve Logistics</title>
-  <style>* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #06090f; }</style>
+  <style>* { margin: 0; padding: 0; box-sizing: border-box; } body { background: #06090f; } @keyframes pulse { 0%,100%{opacity:0.25} 50%{opacity:1} } @keyframes spin { to{transform:rotate(360deg)} }</style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
@@ -638,6 +638,130 @@
       );
     }
 
+    function AiShipperCard({ s, idx }) {
+      return (
+        <div style={{ padding: "7px 9px", marginBottom: 4, background: "#04100c", border: "1px solid #0a2818", borderRadius: 3, borderLeft: "2px solid #1a6a40", position: "relative" }}>
+          {idx === 0 && <div style={{ position: "absolute", top: 4, right: 6, fontSize: 9, color: "#1a5a30", letterSpacing: "0.1em", fontFamily: "monospace" }}>AI</div>}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 6, paddingRight: 14 }}>
+            <div style={{ fontWeight: 700, fontSize: 12, color: "#4a9a70" }}>{s.name}</div>
+            <div style={{ fontSize: 10, color: "#1a4a30", whiteSpace: "nowrap", flexShrink: 0 }}>{s.location}</div>
+          </div>
+          <div style={{ fontSize: 11, color: "#2a6a4a", marginTop: 3, lineHeight: 1.45 }}>{s.note}</div>
+        </div>
+      );
+    }
+
+    function ShipperResearchPanel({ commodity }) {
+      const [status, setStatus] = React.useState("idle");
+      const [results, setResults] = React.useState([]);
+      const [errorMsg, setErrorMsg] = React.useState("");
+
+      const research = async () => {
+        setStatus("loading");
+        setResults([]);
+        setErrorMsg("");
+
+        const peakMonthNames = commodity.peakMonths.map(i => MONTHS[i]).join(", ");
+        const originsStr = commodity.origins.join(", ");
+
+        const prompt = `You are a freight broker research assistant specializing in produce shipping lanes.
+
+Find 5-7 ADDITIONAL grower-shippers, packing houses, or grower cooperatives for this commodity. These are shippers NOT on this existing list: ${commodity.shippers.map(s => s.name).join(", ")}.
+
+Commodity: ${commodity.name}
+Growing regions: ${originsStr}
+Peak months: ${peakMonthNames}
+Temperature: ${commodity.temp}
+Equipment: ${commodity.equipment}
+
+STRICT RULES:
+- Return ONLY actual growers, packing sheds, or grower-shipper cooperatives that own or operate farms
+- Do NOT include retail brands, food manufacturers, distributors, or brokers
+- Focus on operations physically located near: ${originsStr}
+- Each entry: company name, city/state, and a 1-2 sentence broker-relevant note (FTL volume, peak window, who to ask for, what to mention)
+- These must be real operating businesses
+
+Respond ONLY with a valid JSON array — no markdown, no explanation, no code fences:
+[{"name":"...","location":"City, ST","note":"..."}]`;
+
+        try {
+          const response = await fetch("https://api.anthropic.com/v1/messages", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              model: "claude-sonnet-4-20250514",
+              max_tokens: 1000,
+              tools: [{ type: "web_search_20250305", name: "web_search" }],
+              messages: [{ role: "user", content: prompt }]
+            })
+          });
+
+          if (!response.ok) throw new Error(`API error ${response.status}`);
+          const data = await response.json();
+
+          const textBlocks = (data.content || []).filter(b => b.type === "text");
+          if (!textBlocks.length) throw new Error("No response text");
+
+          const raw = textBlocks[textBlocks.length - 1].text;
+          const clean = raw.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+          const start = clean.indexOf("[");
+          const end = clean.lastIndexOf("]");
+          if (start === -1 || end === -1) throw new Error("Could not parse results");
+
+          const parsed = JSON.parse(clean.slice(start, end + 1));
+          if (!Array.isArray(parsed) || parsed.length === 0) throw new Error("No shippers found");
+          setResults(parsed);
+          setStatus("done");
+        } catch (err) {
+          setErrorMsg(err.message || "Research failed");
+          setStatus("error");
+        }
+      };
+
+      return (
+        <div style={{ marginTop: 8 }}>
+          {status === "idle" && (
+            <button onClick={research}
+              style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", gap: 7, background: "#040d14", border: "1px dashed #0d3060", borderRadius: 3, padding: "8px", cursor: "pointer", fontFamily: "monospace" }}>
+              <span style={{ fontSize: 13 }}>🔍</span>
+              <span style={{ fontSize: 11, color: "#2a6aaa", letterSpacing: "0.12em", textTransform: "uppercase" }}>Research More Shippers</span>
+            </button>
+          )}
+          {status === "loading" && (
+            <div style={{ padding: "12px 10px", background: "#040c18", border: "1px dashed #0d3060", borderRadius: 3, textAlign: "center" }}>
+              <div style={{ fontSize: 10, color: "#1a4a7a", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 5 }}>Searching…</div>
+              <div style={{ fontSize: 10, color: "#0e2a50", marginBottom: 8, fontStyle: "italic" }}>Finding grower-shippers near {commodity.origins[0]}</div>
+              <div style={{ display: "flex", justifyContent: "center", gap: 5 }}>
+                {[0,1,2,3].map(i => (
+                  <div key={i} style={{ width: 5, height: 5, borderRadius: "50%", background: "#1a4a8a", animation: `pulse 1.4s ease-in-out ${i*0.18}s infinite` }} />
+                ))}
+              </div>
+            </div>
+          )}
+          {status === "error" && (
+            <div style={{ padding: "8px 10px", background: "#100808", border: "1px solid #2a0a0a", borderRadius: 3 }}>
+              <div style={{ fontSize: 11, color: "#aa3030", marginBottom: 5 }}>⚠ {errorMsg}</div>
+              <button onClick={research} style={{ fontSize: 11, color: "#3a6aaa", background: "transparent", border: "none", cursor: "pointer", fontFamily: "monospace", textDecoration: "underline" }}>Try again</button>
+            </div>
+          )}
+          {status === "done" && results.length > 0 && (
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 6 }}>
+                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#2a8a50", display: "inline-block", flexShrink: 0 }}></span>
+                <span style={{ fontSize: 10, color: "#1a5a30", letterSpacing: "0.2em", textTransform: "uppercase" }}>AI Researched · {results.length} additional shippers</span>
+                <button onClick={() => { setStatus("idle"); setResults([]); }} style={{ marginLeft: "auto", fontSize: 10, color: "#1a3a20", background: "transparent", border: "none", cursor: "pointer", fontFamily: "monospace" }}>✕ clear</button>
+              </div>
+              {results.map((s, i) => <AiShipperCard key={i} s={s} idx={i} />)}
+              <button onClick={research}
+                style={{ width: "100%", marginTop: 4, fontSize: 10, color: "#1a3a20", background: "transparent", border: "1px dashed #0a2010", borderRadius: 3, padding: "5px", cursor: "pointer", fontFamily: "monospace", letterSpacing: "0.1em" }}>
+                🔄 SEARCH AGAIN
+              </button>
+            </div>
+          )}
+        </div>
+      );
+    }
+
     function UrgencyBadge({ level, size = "sm" }) {
       const cfg = URGENCY_CONFIG[level] || URGENCY_CONFIG.medium;
       const isLg = size === "lg";
@@ -1138,6 +1262,7 @@
                                 </button>
                                 {shipperOpen && <div style={{ marginTop: 6 }}>{p.shippers?.map(s => <ShipperCard key={s.name} s={s} />)}</div>}
                               </div>
+                              <ShipperResearchPanel commodity={p} />
                             </div>
                           )}
                         </div>
@@ -1216,6 +1341,7 @@
                                     <span style={{ fontSize: 11, color: "#2a4a7a" }}>{shipperOpen ? "▲" : "▼"}</span>
                                   </button>
                                   {shipperOpen && <div style={{ marginTop: 4 }}>{p.shippers?.map(s => <ShipperCard key={s.name} s={s} />)}</div>}
+                                  <ShipperResearchPanel commodity={p} />
                                 </div>
                               );
                             })}
@@ -1307,6 +1433,7 @@
                                               <span style={{ fontSize: 11, color: "#2a4a7a" }}>{shipperOpen ? "▲" : "▼"}</span>
                                             </button>
                                             {shipperOpen && <div style={{ marginTop: 4 }}>{p.shippers?.filter(s => s.location.includes(origin.split(",")[1]?.trim() || "") || origin.split(",")[0].split(" ").some(w => s.location.includes(w))).concat(p.shippers).slice(0,2).map(s => <ShipperCard key={s.name} s={s} />)}</div>}
+                                            <ShipperResearchPanel commodity={p} />
                                           </div>
                                         );
                                       })}
@@ -1354,4 +1481,4 @@
     root.render(<ProduceHeatMap />);
   </script>
 </body>
-</html>
+</html>  
